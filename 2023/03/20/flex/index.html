@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="记录生活，分享技术，分享生活。">
+    <meta name="author" content="小举">
+    
+    <title>
+        
+            细说 Flex 布局 |
+        
+        小举的阿勒泰
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/brands.min.css">
+    
+        
+            
+                
+<link rel="stylesheet" href="/css/custom.css">
+
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"yongjuer.site","root":"/","language":"zh-CN","path":"search.xml"}
+    KEEP.theme_config = {"base_info":{"primary_color":"rgba(211, 84, 0,1.0)","title":"小举的阿勒泰","author":"小举","avatar":"/images/avatar.png","logo":"/images/avatar.png","favicon":"/images/logo.png"},"menu":{"home":"/ || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags || fa-solid fa-tags","categories":"/categories || fa-solid fa-layer-group","tools":"/tools || fa-solid fa-tools"},"first_screen":{"enable":true,"background_img":"/images/background.jpg","background_img_dark":"/images/background.jpg","description":null,"hitokoto":true},"social_contact":{"enable":false,"links":{"github":null,"weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"created"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":["炼气","筑基","结丹","元婴","化神"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null},"updated_datetime_icon":"fa-solid fa-arrows-rotate","created_datetime_icon":"fa-solid fa-feather"},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":3},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":true},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2021,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":true,"css":[["/css/custom.css"]],"js":[null]},"root":"","source_data":{"tools":[{"category":"聊天 AI","anchorId":"JUU4JTgxJThBJUU1JUE0JUE5JTIwQUk0"},{"name":"ChatGPT","link":"https://chat.openai.com/","description":"OpenAI 旗下 AI 聊天对话工具","image":"/images/tools/chatgpt.svg"},{"name":"Gemini","link":"https://gemini.google.com/app","description":"Google 旗下 AI 聊天对话工具","image":"/images/tools/gemini.svg"},{"name":"Copilot","link":"https://copilot.microsoft.com/","description":"微软旗下的日常 AI 助手","image":"/images/tools/copilot.png"},{"name":"文心一言","link":"https://yiyan.baidu.com/","description":"百度旗下 AI 聊天对话工具","image":"/images/tools/wenxinyiyan.png"},{"name":"通义千问","link":"https://tongyi.aliyun.com/qianwen/","description":"阿里巴巴旗下 AI 聊天对话工具","image":"/images/tools/tongyiqianwen.svg"},{"name":"讯飞星火","link":"https://xinghuo.xfyun.cn/","description":"科大讯飞星火认知 AI 大模型","image":"/images/tools/xinghuo.svg"},{"category":"绘画 AI","anchorId":"JUU3JUJCJTk4JUU3JTk0JUJCJTIwQUk7"},{"name":"Midjourney","link":"https://www.midjourney.com/","description":"AI 图像和插画生成工具","image":"/images/tools/midjourney.png"},{"name":"Adobe Firefly","link":"https://firefly.adobe.com/","description":"Adobe 推出的 AI 图像生成和编辑工具","image":"/images/tools/adobe-firefly.svg"},{"name":"Stable Diffusion","link":"https://stability.ai/","description":"最强开源 AI 绘画工具","image":"/images/tools/stability.png"},{"name":"Microsoft Designer","link":"https://designer.microsoft.com/home","description":"微软推出的在线设计海报和宣传图工具","image":"/images/tools/microsoft-designer.svg"},{"name":"文心一格","link":"https://yige.baidu.com/","description":"百度出品的 AI 绘画工具","image":"/images/tools/wenxinyiyan.png"},{"category":"技术社区","anchorId":"JUU2JThBJTgwJUU2JTlDJUFGJUU3JUE0JUJFJUU1JThDJUJB13"},{"name":"稀土掘金","link":"https://juejin.cn/","description":"一个帮助开发者成长的社区","image":"/images/tools/juejin.svg"},{"name":"V2EX","link":"https://www.v2ex.com/","description":"创意工作者们的社区","image":"/images/tools/v2ex.png"},{"name":"思否","link":"https://segmentfault.com/","description":"中国领先的开发者技术社区","image":"/images/tools/segmentfault.svg"},{"name":"博客园","link":"https://www.cnblogs.com/","description":"开发者的网上家园","image":"/images/tools/cnblogs.png"},{"name":"W2Solo","link":"https://w2solo.com/","description":"中文独立开发者社区","image":null},{"name":"电鸭社区","link":"https://eleduck.com/","description":"专注远程工作招聘交流","image":"/images/tools/dianyashequ.png"},{"name":"StackOverflow","link":"https://stackoverflow.com/","description":"全球最大的技术问答社区","image":"/images/tools/stackoverflow.png"},{"name":"开源中国","link":"https://www.oschina.net/","description":"目前国内最大的开源技术社区","image":"/images/tools/oschina.webp"},{"name":"InfoQ","link":"https://www.infoq.cn/","description":"一个实践驱动的技术社区资讯站点","image":"/images/tools/infoq.png"},{"name":"51CTO","link":"https://www.51cto.com/","description":"中国领先的 IT 技术网站","image":"/images/tools/51cto.webp"},{"name":"CSDN","link":"https://www.csdn.net/","description":"中文最大的技术社区","image":"/images/tools/csdn.png"},{"category":"部署托管","anchorId":"JUU5JTgzJUE4JUU3JUJEJUIyJUU2JTg5JTk4JUU3JUFFJUEx25"},{"name":"GitHub Pages","link":"https://pages.github.com/","description":"通过 GitHub 托管和发布的公共网页","image":"/images/tools/github.svg"},{"name":"Vercel","link":"https://vercel.com/","description":"Vercel's Frontend Cloud provides the developer experience and infrastructure to build, scale, and secure a faster, more personalized web.","image":"/images/tools/vercel.svg"},{"name":"Cloudflare Pages","link":"https://developers.cloudflare.com/pages/","description":"Create full-stack applications that are instantly deployed to the Cloudflare global network.","image":"/images/tools/cloudflare.svg"},{"name":"Netlify","link":"https://www.netlify.com/","description":"Netlify is the essential platform for the delivery of exceptional and dynamic web experiences, without limitations.","image":"/images/tools/netlify.svg"},{"name":"Railway","link":"https://railway.app/","description":"Railway is the cloud for building, shipping, and monitoring applications.","image":"/images/tools/railway.svg"},{"name":"Zeabur","link":"https://zeabur.com","description":"Say goodbye to deployment hassles. With Zeabur, bring your coding genius to life swiftly and smoothly.","image":"/images/tools/zeabur.png"}]},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小举的阿勒泰" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/avatar.png">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               小举的阿勒泰
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tools">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-tools"></i>
+                                
+                                工具
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="menu-text-color fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-home"></i>
+                                </span>
+                            
+                            首页
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-box-archive"></i>
+                                </span>
+                            
+                            归档
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-tags"></i>
+                                </span>
+                            
+                            标签
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-layer-group"></i>
+                                </span>
+                            
+                            分类
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tools">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-tools"></i>
+                                </span>
+                            
+                            工具
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+                <div class="post-content-top border-box"
+                     style="height: 260px"
+                >
+                    <div class="cover-post-title">
+                        细说 Flex 布局
+                    </div>
+                    <img class="post-cover" src="/images/posts/css-flex/cover.png"
+                         onerror="this.style.display='none'"
+                    >
+                </div>
+            
+
+            <div class="post-content-bottom border-box has-cover">
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.png">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">小举</span>
+                                
+                                    <span class="author-badge">筑基</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-feather"></i>&nbsp;
+                <span class="datetime">2023-03-20</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-arrows-rotate"></i>&nbsp;
+                    <span class="datetime" data-updated="Mon Jun 17 2024 05:54:12 GMT+0000">2024-06-17</span>
+                </span>
+            
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/CSS/">CSS</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Css/">Css</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Flex/">Flex</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>6.4k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>26 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h2 id="1-什么是-Flexbox？"><a href="#1-什么是-Flexbox？" class="headerlink" title="1. 什么是 Flexbox？"></a>1. 什么是 Flexbox？</h2><p>Flexbox 是“Flexible Box Layout”的缩写。它是一个 CSS 布局模型，可以简化复杂布局的创建。它提供了一种灵活的方式来对齐元素并在容器元素内分配空间。</p>
+<p>在 Flexbox 出现之前，创建复杂的布局和响应式网页非常艰难。你需要 CSS 浮动和位置属性的组合。这需要许多变通方法和技巧。但使用 Flexbox，你现在可以面对更少的困难，使用更少的代码行数来实现以下操作：</p>
+<ul>
+<li>使用 <code>justify-content</code> 和 <code>align-items</code> 等属性对齐和居中元素。</li>
+<li>无需编写大量媒体查询即可开发响应式布局。</li>
+<li>在不改变 HTML 结构的情况下重新排序元素。</li>
+<li>创建相同高度的列，无需任何额外的 HTML 元素或背景图片。</li>
+</ul>
+<h2 id="2-如何使用-Flexbox？"><a href="#2-如何使用-Flexbox？" class="headerlink" title="2. 如何使用 Flexbox？"></a>2. 如何使用 Flexbox？</h2><p>Flexbox 布局模型是双向的。这意味着你可以按行、列或两者排列元素。</p>
+<h3 id="2-1-主轴和交叉轴"><a href="#2-1-主轴和交叉轴" class="headerlink" title="2.1 主轴和交叉轴"></a>2.1 主轴和交叉轴</h3><p>关于 Flexbox，你首先需要了解的是轴的概念。每个 Flex 容器（ <code>display</code> 属性设置为 flex 或 <code>inline-flex</code> 的元素）都有一个主轴和一个交叉轴。主轴是水平的还是垂直的，具体取决于 <code>flex-direction</code> 的值。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/flex-axis.png"
+                        alt="Flex 轴示例"
+                 ></p>
+<p>在这个示例中，主轴是水平的，交叉轴是垂直的。<code>flex-direction</code> 的值是 <code>row</code>。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/flex-axis-02.png"
+                        alt="Flex 轴示例"
+                 ></p>
+<p>在这个示例中，主轴是垂直的，交叉轴是水平的。<code>flex-direction</code> 的值是 <code>column</code>。</p>
+<h3 id="2-2-Flex-容器和-Flex-子项"><a href="#2-2-Flex-容器和-Flex-子项" class="headerlink" title="2.2 Flex 容器和 Flex 子项"></a>2.2 Flex 容器和 Flex 子项</h3><p>要使用 Flexbox 的所有属性，你需要将元素的 <code>display</code> 属性设置为 <code>flex</code> 或 <code>inline-flex</code>。这将使元素成为 Flex 容器，并且该元素的子元素变成 Flex 子项。 举个例子：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;item&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>This paragraph is not a flex item<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>.container</code> 元素现在是一个 Flex 容器。这三个 <code>div</code> 元素是 <code>.container</code> 元素的<strong>直接</strong>子元素，这使得它们成为 Flex 子项。<strong>但第三个 <code>div</code> 内的段落元素不是 Flex 子项。这是因为它不是 <code>.container</code> 元素的直接子元素。</strong></p>
+<h3 id="2-3-Flex-和-Inline-flex"><a href="#2-3-Flex-和-Inline-flex" class="headerlink" title="2.3 Flex 和 Inline-flex"></a>2.3 Flex 和 Inline-flex</h3><p>使用 <code>flex</code> 和 <code>inline-flex</code> 都可以使元素成为 Flex 容器。不同之处在于它们<strong>与周围元素的交互方式</strong>。</p>
+<ul>
+<li><code>display: flex</code>：这使得 Flex 容器的行为类似块级元素。Flex 容器<strong>占据其父元素的整个可用宽度</strong>。它会在新的一行开始，并且其后的元素也会在新的一行开始。比如：</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>Button One<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"></span><br><span class="line">/* Flex Container */</span><br><span class="line"><span class="tag">&lt;<span class="name">section</span> <span class="attr">class</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;red&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;gold&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;green&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">section</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span>&gt;</span>Button Two<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-01.png"
+                        alt="Flex 容器示例"
+                 ></p>
+<p>如上所示，当你使用 <code>display: flex</code> 时，Flex 容器的行为类似于块元素，<code>.container</code> 元素占据了主体（其父元素）的整个可用宽度。</p>
+<ul>
+<li><code>display: inline-flex</code>：这使得 Flex 容器的行为类似于内联元素。Flex 容器<strong>只占据它的内容宽度</strong>。它不会在新的一行开始，而是与周围元素在同一行。如果将上面的例子改为 <code>display: inline-flex</code>,则效果如下所示：</li>
+</ul>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-03.png"
+                        alt="Inline-flex 容器示例"
+                 ></p>
+<p>如图所示，Flex 容器不占据其父容器的整个宽度。它仅使用其内容所需的水平空间。</p>
+<h2 id="3-Flex-容器属性"><a href="#3-Flex-容器属性" class="headerlink" title="3. Flex 容器属性"></a>3. Flex 容器属性</h2><p>Flex 容器属性允许你控制 Flex 容器内 Flex 子项的布局和对齐方式。</p>
+<blockquote>
+<p>⚠️ 注意：以下属性仅适用于 Flex 容器，而不是 Flex 子项。</p>
+</blockquote>
+<h3 id="3-1-flex-direction-属性"><a href="#3-1-flex-direction-属性" class="headerlink" title="3.1 flex-direction 属性"></a>3.1 flex-direction 属性</h3><p><code>flex-direction</code> 属性决定主轴的方向。定义了 Flex 子项的显示方向,它可以取以下值中的任意一个：</p>
+<ul>
+<li><code>row</code>：默认值。主轴从左到右。</li>
+<li><code>row-reverse</code>：主轴从右到左。</li>
+<li><code>column</code>：主轴从上到下。</li>
+<li><code>column-reverse</code>：主轴从下到上。</li>
+</ul>
+<p>让我们看一个例子，看看它是如何工作的：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;names-container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jill&quot;</span>&gt;</span>1. JILL<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;john&quot;</span>&gt;</span>2. JOHN<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jane&quot;</span>&gt;</span>3. JANE<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jack&quot;</span>&gt;</span>4. JACK<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: row;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>flex-direction: row</code>: 这会从左到右水平显示 Flex 子项。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-04.png"
+                        alt="Flex Direction 示例"
+                 ></p>
+<p><code>flex-direction: row-reverse</code>: 这会从右到左水平显示 Flex 子项。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-05.png"
+                        alt="Flex Direction 示例"
+                 ></p>
+<p><code>flex-direction: column</code>: 这会从上到下垂直显示 Flex 子项。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-06.png"
+                        alt="Flex Direction 示例"
+                 ></p>
+<p><code>flex-direction: column-reverse</code>: 这会从下到上垂直显示 Flex 子项。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-07.png"
+                        alt="Flex Direction 示例"
+                 ></p>
+<blockquote>
+<p>⚠️ 当你使用 <code>row-reverse</code> 和 <code>column-reverse</code> 时，有些事情你需要记住。正如你已经看到的，这两个值会影响屏幕上元素的视觉顺序。<strong>但是这些元素在 HTML 中的顺序保持不变</strong>，而这些元素在 HTML 中的顺序就是屏幕阅读器和键盘导航控件使用的顺序。<br>在示例中，当你使用 <code>row-reverse</code> 时，你首先在屏幕上看到 Jack 的名字，然后是 Jane、John 和 Jill。但是对于使用屏幕阅读器的人来说，他们将会按照 HTML 中的出现顺序而不是屏幕上的顺序来听到这些名字。在这种情况下，他们将首先听到 Jill 的名字，然后是 John、Jane 和 Jack。</p>
+</blockquote>
+<h3 id="3-2-flex-wrap-属性"><a href="#3-2-flex-wrap-属性" class="headerlink" title="3.2 flex-wrap 属性"></a>3.2 flex-wrap 属性</h3><p>有时，Flex 容器内的空间不足以容纳 Flex 子项, 在这种情况下，你可以使用 <code>flex-wrap</code> 属性来选择是让 Flex 子项溢出还是另起一行。</p>
+<p>flex-wrap 属性接受以下任何值：</p>
+<ul>
+<li><code>nowrap</code>（默认值）：禁止 Flex 子项换行。</li>
+<li><code>wrap</code>：允许 Flex 子项在新行开始。</li>
+<li><code>wrap-reverse</code>：允许 Flex 子项在新行开始，并且新行的方向与 <code>wrap</code> 方向相反。</li>
+</ul>
+<p>要看到 <code>flex-wrap</code> 的效果，让我们向 <code>names-container</code> 添加超过四个的名字：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;names-container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jill&quot;</span>&gt;</span>1. JILL<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;john&quot;</span>&gt;</span>2. JOHN<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jane&quot;</span>&gt;</span>3. JANE<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jack&quot;</span>&gt;</span>4. JACK<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;sara&quot;</span>&gt;</span>5. SARA<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;seth&quot;</span>&gt;</span>6. SETH<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;seal&quot;</span>&gt;</span>7. SEAL<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: row;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: nowrap;</span><br><span class="line">  <span class="comment">/* Other styles here... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>flex-wrap: nowrap</code>: 这会禁止 Flex 子项换行。在这个例子中，由于空间不足，三个名字溢出容器。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-08.png"
+                        alt="Flex Wrap 示例"
+                 ></p>
+<p><code>flex-wrap: wrap</code>: 当空间不足时，这会将 Flex 子项换行或推到下一行。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-09.png"
+                        alt="Flex Wrap 示例"
+                 ></p>
+<p><code>flex-wrap: wrap-reverse</code>: 这会允许 Flex 子项在新行开始，并且新行的方向与 <code>wrap</code> 方向相反。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-10.png"
+                        alt="Flex Wrap 示例"
+                 ></p>
+<h3 id="3-3-flex-flow-缩写属性"><a href="#3-3-flex-flow-缩写属性" class="headerlink" title="3.3 flex-flow 缩写属性"></a>3.3 flex-flow 缩写属性</h3><p><code>flex-flow</code> 属性是 <code>flex-direction</code> 和 <code>flex-wrap</code> 属性的缩写。这意味着当你使用 <code>flex-flow</code> 时，只需要一行代码即可同时应用这两个属性。如下所示：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="comment">/* Other styles here... */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* is equivalent to: */</span></span><br><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-flow</span>: column wrap;</span><br><span class="line">  <span class="comment">/* Other styles here... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-11.png"
+                        alt="Flex Wrap 示例"
+                 ></p>
+<h3 id="3-4-justify-content-属性"><a href="#3-4-justify-content-属性" class="headerlink" title="3.4 justify-content 属性"></a>3.4 justify-content 属性</h3><p><code>justify-content</code> 属性处理 Flex 容器主轴上 Flex 子项的对齐方式。你可以使用它来处理主轴上空间的分配方式。该属性可以取以下任何值：</p>
+<ul>
+<li><code>flex-start</code>（默认值）：Flex 子项向主轴起点对齐。</li>
+<li><code>flex-end</code>：Flex 子项向主轴终点对齐。</li>
+<li><code>center</code>：Flex 子项居中对齐。</li>
+<li><code>space-between</code>：Flex 子项平均分布，两端对齐。</li>
+<li><code>space-around</code>：Flex 子项平均分布，每个项两侧留有空白。</li>
+<li><code>space-evenly</code>：Flex 子项平均分布，所有项间均匀分布。</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">  <span class="comment">/* Other styles here... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>justify-content: flex-start</code>:这将把 Flex 子项放置在 <code>flex-direction</code> 的起始位置。如果主轴是水平的（<code>flex-direction</code> 的属性值是 row），它会将 Flex 子项对齐到左侧。如果主轴是垂直的（<code>flex-direction</code> 的属性值是 column），它会将 Flex 子项对齐到顶部。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-12.png"
+                        alt="Justify Content 示例"
+                 ></p>
+<p><code>justify-content: flex-end</code> :这会将 Flex 子项放置在主轴的 flex-direction 的末尾。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-13.png"
+                        alt="Justify Content 示例"
+                 ></p>
+<p><code>justify-content: center</code> :这会将 Flex 子项居中对齐。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-14.png"
+                        alt="Justify Content 示例"
+                 ></p>
+<p><code>justify-content: space-between</code>: 这会将第一个 Flex 子项放置在主轴的起始位置，并将最后一个项放置在主轴的末尾。然后，主轴上的空间在这些元素之间均匀分布。(<code>space-between</code>并不改变元素本身大小，它的作用只是将元素之间的间距均匀划分了):</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-15.png"
+                        alt="Justify Content 示例"
+                 ></p>
+<p><code>justify-content: space-around</code>: 这也会在 Flex 子项之间均匀分配空间。这里的关键区别在于，第一个项之前和最后一个项之后的空间是 Flex 子项之间空间的一半。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-16.png"
+                        alt="Justify Content 示例"
+                 ></p>
+<p><code>justify-content: space-evenly</code>: 这会在 Flex 子项之间均匀分配空间。这意味着每项前后的空间都相同。（在 <code>space-between</code> 模式中，首项和末项在没有其他 CSS 设置的前提下，与 Flex 容器的左外边距&#x2F;右外边距为 0，即在 Flex 容器中与最左端和最右端“顶格”。而<code>space-evenly</code> 则是保证每一个 Flex 子项左侧和右侧的边距均是相等的，即 Flex 子项之间的间距和 Flex 子项与 Flex 容器边界的间距都相等，该模式下 Flex 子项与 Flex 容器的左右边界也存在间距。）</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-17.png"
+                        alt="Justify Content 示例"
+                 ></p>
+<h3 id="3-5-align-items-属性"><a href="#3-5-align-items-属性" class="headerlink" title="3.5 align-items 属性"></a>3.5 align-items 属性</h3><p><code>align-items</code> 属性处理 Flex 子项在 Flex 容器交叉轴上的对齐方式。它可以采用以下任意值：</p>
+<ul>
+<li><code>stretch</code>（默认值）：默认值。Flex 子项拉伸以填充 Flex 容器。</li>
+<li><code>flex-start</code>：Flex 子项向交叉轴起点对齐。</li>
+<li><code>flex-end</code>：Flex 子项向交叉轴终点对齐。</li>
+<li><code>center</code>：Flex 子项居中对齐。</li>
+<li><code>baseline</code>：Flex 子项与容器基线对齐。</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">align-items</span>: stretch;</span><br><span class="line">  <span class="comment">/* Other styles here... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>align-items: stretch</code>: 这会默认拉伸 Flex 子项以填充 Flex 容器。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-18.png"
+                        alt="Align Items 示例"
+                 ></p>
+<p><code>align-items: flex-start</code>: 这会将 Flex 子项放置在交叉轴的起始位置。如果交叉轴是垂直的，它会将 Flex 子项放置在顶部。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-19.png"
+                        alt="Align Items 示例"
+                 ></p>
+<p><code>align-items: flex-end</code>: 这会将 Flex 子项放置在交叉轴的末尾。如果交叉轴是垂直的，如下例所示， align-items: 它会将 Flex 子项放置在底部。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-20.png"
+                        alt="Align Items 示例"
+                 ></p>
+<p><code>align-items: center</code>: 这会将 Flex 子项在交叉轴上居中对齐。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-21.png"
+                        alt="Align Items 示例"
+                 ></p>
+<p><code>align-items: baseline</code>: 当你使用 baseline 值时，Flex 子项目的排列方式是使它们的基线对齐。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-22.png"
+                        alt="Align Items 示例"
+                 ></p>
+<h3 id="3-6-align-content-属性"><a href="#3-6-align-content-属性" class="headerlink" title="3.6 align-content 属性"></a>3.6 align-content 属性</h3><p>当你有一个带有换行（或多个 Flex 行）的 Flex 容器时，你可能需要对这些行进行对齐以根据需要分配空间。这时你可以使用 align-content 。</p>
+<p><code>align-content</code> 属性可以取以下任意值：</p>
+<ul>
+<li><code>stretch</code>（默认值）：默认值。Flex 行拉伸以填充 Flex 容器。</li>
+<li><code>flex-start</code>：Flex 行向交叉轴起点对齐。</li>
+<li><code>flex-end</code>：Flex 行向交叉轴终点对齐。</li>
+<li><code>center</code>：Flex 行居中对齐。</li>
+<li><code>space-between</code>：Flex 行平均分布，两端对齐。</li>
+<li><code>space-around</code>：Flex 行平均分布，每个项两侧留有空白。</li>
+<li><code>space-evenly</code>：Flex 行平均分布，所有项间均匀分布。</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: flex-start;</span><br><span class="line">  <span class="comment">/* Other styles here... */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在下面的示例中，<code>names-container</code>中有 11 个名字，并且<code>names-container</code>的 <code>flex-wrap</code> 值为 wrap。这意味着你可以应用 <code>align-content</code> 属性来改变 Flex 行的对齐方式。</p>
+<p><code>align-content: stretch</code>:这会拉伸 Flex 行以填充 Flex 容器交叉轴内的空间。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-23.png"
+                        alt="Align Content 示例"
+                 ></p>
+<p><code>align-content: flex-start</code>: 这将把 Flex 行放置在容器的交叉轴起始位置。例如，如果交叉轴像 <code>names-container</code> 一样是垂直的，它就会将 Flex 行放置在顶部。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-24.png"
+                        alt="Align Content 示例"
+                 ></p>
+<p><code>align-content: flex-end</code>: 这将把 Flex 行放置在容器的交叉轴末尾。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-25.png"
+                        alt="Align Content 示例"
+                 ></p>
+<p><code>align-content: center</code>: 这会将 Flex 行放置在容器的交叉轴中心位置。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-26.png"
+                        alt="Align Content 示例"
+                 ></p>
+<p><code>align-content: space-between</code>: 这会将第一行放置在交叉轴的起始位置。它还会将最后一行放置在交叉轴的末尾位置。然后，交叉轴上的空间会均匀分配给这些行。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-27.png"
+                        alt="Align Content 示例"
+                 ></p>
+<p><code>align-content: space-around</code>: 这也会在 Flex 行之间均匀分配空间。这里的主要区别在于，第一行之前和最后一行之后的空间是 Flex 行之间空间的一半。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-28.png"
+                        alt="Align Content 示例"
+                 ></p>
+<p><code>align-content: space-evenly</code>: 这会在 Flex 行之间均匀分配空间。这意味着每行前后的空间都相同。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-29.png"
+                        alt="Align Content 示例"
+                 ></p>
+<h3 id="3-7-place-content-属性"><a href="#3-7-place-content-属性" class="headerlink" title="3.7 place-content 属性"></a>3.7 place-content 属性</h3><p>如果你需要同时使用 <code>justify-content</code> 和 <code>align-content</code> 属性，你可以使用 <code>place-content</code> 缩写属性。它可以接受一个或两个值。当你给它一个单一值时，浏览器会为 <code>justify-content</code> 和 <code>align-content</code> 应用相同的值。当你为 <code>place-content</code> 提供两个值时，第一个值将用于 <code>align-content</code> ，第二个值将用于 <code>justify-content</code>。让我们看一个示例:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">align-content</span>: flex-end;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">  <span class="comment">/* Other content */</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* is equivalent to: */</span></span><br><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  place-<span class="attribute">content</span>: flex-end flex-start;</span><br><span class="line">  <span class="comment">/* Other content */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-30.png"
+                        alt="Place Content 示例"
+                 ></p>
+<h2 id="4-Flex-子项属性"><a href="#4-Flex-子项属性" class="headerlink" title="4. Flex 子项属性"></a>4. Flex 子项属性</h2><p>Flex 容器的每个直接子元素都是 Flex 子项。Flexbox 还有一些属性，你可以应用到单个 Flex 子项上。它们包括以下内容：</p>
+<ul>
+<li><code>order</code> 属性：你可以使用 <code>order</code> 属性来控制 Flex 子项的显示顺序。默认情况下，Flex 子项按照它们在 HTML 中的顺序来显示。</li>
+<li><code>align-self</code> 属性：你可以使用 <code>align-self</code> 属性来控制单个 Flex 子项的对齐方式。默认情况下，<code>align-items</code> 属性的值会应用到 Flex 子项上。</li>
+<li><code>flex-grow</code> 属性：你可以使用 <code>flex-grow</code> 属性来控制 Flex 子项的扩展比例。默认情况下，Flex 子项的扩展比例为 0，即它们不会扩展。</li>
+<li><code>flex-shrink</code> 属性：你可以使用 <code>flex-shrink</code> 属性来控制 Flex 子项的收缩比例。默认情况下，Flex 子项的收缩比例为 1，即它们会收缩以适应 Flex 容器。</li>
+<li><code>flex-basis</code> 属性：你可以使用 <code>flex-basis</code> 属性来设置 Flex 子项的初始大小。默认情况下，Flex 子项的初始大小为 auto，即它们会根据内容的大小来确定大小。</li>
+<li><code>flex</code> 属性：你可以使用 <code>flex</code> 属性来一次性设置 <code>flex-grow</code>、<code>flex-shrink</code> 和 <code>flex-basis</code> 属性。</li>
+</ul>
+<h3 id="4-1-order-属性"><a href="#4-1-order-属性" class="headerlink" title="4.1 order 属性"></a>4.1 order 属性</h3><p>order 属性确定 Flex 子项的出现顺序。给这个属性的赋值必须是一个数字。一个数字较小的 Flex 子项将出现在数字较大的 Flex 子项之前。</p>
+<p>在 HTML 代码中，四个名字的顺序如下:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;names-container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jill&quot;</span>&gt;</span>1. JILL<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;john&quot;</span>&gt;</span>2. JOHN<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jane&quot;</span>&gt;</span>3. JANE<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;jack&quot;</span>&gt;</span>4. JACK<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>你可以使用 order 属性改变屏幕上的出现顺序。以下是没有 order 属性时它们的显示方式:</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-31.png"
+                        alt="Order 示例"
+                 ></p>
+<p>当你添加以下 order 属性时，它们的显示方式如下所示：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#jill</span> &#123;</span><br><span class="line">  <span class="attribute">order</span>: <span class="number">2</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fe4f46</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#john</span> &#123;</span><br><span class="line">  <span class="attribute">order</span>: <span class="number">4</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fcd65c</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#jane</span> &#123;</span><br><span class="line">  <span class="attribute">order</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#00bab4</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#jack</span> &#123;</span><br><span class="line">  <span class="attribute">order</span>: <span class="number">3</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#003f54</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-32.png"
+                        alt="Order 示例"
+                 ></p>
+<blockquote>
+<p>‼️ 尽管屏幕上的出现顺序改变了，但 HTML 中的顺序保持不变。而屏幕阅读器使用的是 HTML 中的顺序。如果可能，最佳实践是在 HTML 中改变顺序，而不是使用 Flexbox 进行更改。</p>
+</blockquote>
+<h3 id="4-2-align-self-属性"><a href="#4-2-align-self-属性" class="headerlink" title="4.2 align-self 属性"></a>4.2 align-self 属性</h3><p>你可以使用 <code>align-self</code> 属性为一个 Flex 子项单独设置不同的对齐方式。它的工作方式与 <code>align-items</code> 属性相同。不同之处在于， <code>align-items</code> 适用于所有 Flex 子项，而 <code>align-self</code> 属性仅适用于特定项。 例如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#jill</span> &#123;</span><br><span class="line">  <span class="attribute">align-self</span>: flex-start;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-33.png"
+                        alt="Align Self 示例"
+                 ></p>
+<p>在这个示例中，<code>names-container</code> 的 <code>align-items</code> 属性设置为 <code>center</code>，这会使所有名字都居中对齐。但是使用 <code>align-self</code> 属性，你可以用 <code>flex-start</code> 将 Jill 的名字卡片对齐到顶部。</p>
+<h3 id="4-3-flex-grow-属性"><a href="#4-3-flex-grow-属性" class="headerlink" title="4.3 flex-grow 属性"></a>4.3 flex-grow 属性</h3><p>当你将容器的 display 设置为 flex 时，通常会在排列项之后有一些额外的空间。请参阅下面的示例：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">  <span class="comment">/* Other styles */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-34.png"
+                        alt="Flex Grow 示例"
+                 ></p>
+<p>浏览器会将<strong>多余的空间</strong>视为 1 的值。这意味着当你为其中一个 Flex 子项的 <code>flex-grow</code> 设置为 0.5 时，浏览器会将剩余空间的一半添加到该项的大小中。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#jill</span> &#123;</span><br><span class="line">  <span class="attribute">flex-grow</span>: <span class="number">0.5</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-35.png"
+                        alt="Flex Grow 示例"
+                 ></p>
+<p>在这个示例中，Jill 的 <code>flex-grow</code> 属性设置为 0.5，这会使浏览器将剩余空间的一半添加到 Jill 的大小中。<code>flex-grow</code> 属性使 Jill 的大小大于其初始大小。</p>
+<p>如果你只给一个 Flex 子项设置了 <code>flex-grow</code> 值为 1 ，浏览器将把所有额外的空间都分配给该项。下面两个代码片段对 Jill 的卡片具有相同的效果：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#jill</span> &#123;</span><br><span class="line">  <span class="attribute">flex-grow</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* is equivalent to: */</span></span><br><span class="line"></span><br><span class="line"><span class="selector-id">#jill</span> &#123;</span><br><span class="line">  <span class="attribute">flex-grow</span>: <span class="number">99</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-36.png"
+                        alt="Flex Grow 示例"
+                 ></p>
+<p>当你为多个元素添加 <code>flex-grow</code> 值会发生什么？浏览器将<strong>按比例</strong>为它们共享额外的空间。</p>
+<p>例如，当你给 Jane 设置 <code>flex-grow</code> 为 3，给 Jack 设置 flex-grow 为 1 时，浏览器将以 3:1 的比例分享额外的空间。这意味着额外空间的总值变为 4（3+1）。Jane 将获得额外空间的 3&#x2F;4，而 Jack 将获得 1&#x2F;4, 如下图所示：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-37.png"
+                        alt="Flex Grow 示例"
+                 ></p>
+<h3 id="4-4-flex-shrink-属性"><a href="#4-4-flex-shrink-属性" class="headerlink" title="4.4 flex-shrink 属性"></a>4.4 flex-shrink 属性</h3><p><code>flex-shrink</code> 属性与 <code>flex-grow</code> 相反。当你希望在存在额外空间时增加 Flex 子项的大小时，你可以使用 <code>flex-grow</code>。但是，当 Flex 容器中的空间不足时，你可以使用 <code>flex-shrink</code> 来减小 Flex 子项的大小。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;numbers-container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;one&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;two&quot;</span>&gt;</span>2<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;three&quot;</span>&gt;</span>3<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span> <span class="attr">id</span>=<span class="string">&quot;four&quot;</span>&gt;</span>4<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.numbers-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: flex-start;</span><br><span class="line">  <span class="comment">/* Other styles */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#one</span> &#123;</span><br><span class="line">  <span class="attribute">flex-shrink</span>: <span class="number">2</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="number">#fe4f46</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-38.png"
+                        alt="Flex Shrink 示例"
+                 ></p>
+<p>在这个示例中，四个数字每个的宽度都设置为 150px（总共 600px）。但 <code>numbers-container</code> 的宽度只有 400px，这是不够的。卡片必须缩小以适应可用空间。数字 1 的 <code>flex-shrink</code> 的值为 2, 其他子项没有设置（默认值是 1），这意味着数字 1 在缩小时会以两倍于默认或其他设置较低的元素的比例进行收缩。</p>
+<p><strong>如果你不希望一个 Flex 子项缩小怎么办？</strong>为了防止 Flex 子项收缩，给它一个 <code>flex-shrink</code> 值为 0。例如，当你为 Number 1 指定 <code>flex-shrink</code> 为 0 时，它将保持 150px 的宽度。其他 Flex 子项将缩小以适应剩余空间。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-39.png"
+                        alt="Flex Shrink 示例"
+                 ></p>
+<h3 id="4-5-flex-basis-属性"><a href="#4-5-flex-basis-属性" class="headerlink" title="4.5 flex-basis 属性"></a>4.5 flex-basis 属性</h3><p>你可以使用 <code>flex-basis</code> 属性来设置特定 Flex 子项的默认长度。这取决于 <code>flex-direction</code> ，可以是宽度或高度。</p>
+<ul>
+<li>如果 <code>flex-direction</code> 是 <code>row</code> 或 <code>row-reverse</code> ，则 <code>flex-basis</code> 的值就成为 Flex 子项的初始宽度。</li>
+<li>如果 <code>flex-direction</code> 是 <code>column</code> 或 <code>column-reverse</code> ，那么 <code>flex-basis</code> 的值就成为 Flex 子项的初始高度。</li>
+</ul>
+<p>例如:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="comment">/* Other styles */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#jane</span> &#123;</span><br><span class="line">  <span class="attribute">flex-basis</span>: <span class="number">60px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-40.png"
+                        alt="Flex Basis 示例"
+                 ></p>
+<p>在这个示例中，div 的高度设置为 20px。但 Jane 得到的 flex-basis 值为 60px。这意味着 Jane 的初始高度为 60px，而不是 20px。</p>
+<p>下面是另一个示例。这次，<code>flex-direction</code> 是 row。这意味着 flex-basis 将设置 Flex 子项的宽度。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: row;</span><br><span class="line">  <span class="comment">/* Other styles */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">70px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#jane</span> &#123;</span><br><span class="line">  <span class="attribute">flex-basis</span>: <span class="number">140px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-41.png"
+                        alt="Flex Basis 示例"
+                 ></p>
+<p>在这个示例中，div 的宽度设置为 70px。但 Jane 得到的 flex-basis 值为 140px。这意味着 Jane 的初始宽度为 140px，而不是 70px。</p>
+<h3 id="4-6-flex-缩写属性"><a href="#4-6-flex-缩写属性" class="headerlink" title="4.6 flex 缩写属性"></a>4.6 flex 缩写属性</h3><p>你可以使用 flex 作为 <code>flex-grow</code>、<code>flex-shrink</code> 和 <code>flex-basis</code> 属性的缩写。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.flex-item</span> &#123;</span><br><span class="line">  <span class="attribute">flex-grow</span>: <span class="number">2</span>;</span><br><span class="line">  <span class="attribute">flex-shrink</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">flex-basis</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* is equivalent to: */</span></span><br><span class="line"><span class="selector-class">.flex-item</span> &#123;</span><br><span class="line">  <span class="attribute">flex</span>: <span class="number">2</span> <span class="number">0</span> <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在这个示例中，<code>flex-grow</code> 的值为 2，<code>flex-shrink</code> 的值为 0，<code>flex-basis</code> 的值为 50px。这等价于 <code>flex: 2 0 50px;</code>。</p>
+<p><strong>值的顺序很重要</strong>。浏览器将第一个值分配给 <code>flex-grow</code>，第二个值分配给 <code>flex-shrink</code>，第三个值分配给 <code>flex-basis</code>。这意味着如果你给 flex 一个值为 2，浏览器将使用 2 作为 <code>flex-grow</code>。然后它将 <code>flex-shrink</code> 设置为 0，将 <code>flex-basis</code> 设置为 auto。</p>
+<blockquote>
+<p>💡 flex 的默认值是 1 0 auto。</p>
+</blockquote>
+<h2 id="5-一些-Flexbox-常见用例"><a href="#5-一些-Flexbox-常见用例" class="headerlink" title="5. 一些 Flexbox 常见用例"></a>5. 一些 Flexbox 常见用例</h2><h3 id="5-1-元素居中"><a href="#5-1-元素居中" class="headerlink" title="5.1 元素居中"></a>5.1 元素居中</h3><p>让许多前端开发人员头疼的问题之一是元素居中。 Flexbox 对此提供了一个完美的解决方案。</p>
+<p>涉及两个步骤：</p>
+<ol>
+<li>通过将 <code>display</code> 设置为 <code>flex</code> 使父元素成为 Flex 容器。</li>
+<li>将 <code>justify-content</code> 和 <code>align-items</code> 都设置为 <code>center</code>。</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;name-container&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">p</span>&gt;</span>JOHN<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.name-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">justify-content</span>: center;</span><br><span class="line">  <span class="attribute">align-items</span>: center;</span><br><span class="line">  <span class="comment">/* Other Styles */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-42.png"
+                        alt="Flexbox 居中示例"
+                 ></p>
+<p>无论你是试着居中文本、图像，还是整个导航栏，这都能完美运行。</p>
+<h3 id="5-2-全屏布局"><a href="#5-2-全屏布局" class="headerlink" title="5.2 全屏布局"></a>5.2 全屏布局</h3><p>经典的<strong>全屏布局</strong>由顶部、底部和主体三部分组成，其特性为<strong>三部分左右满屏拉伸、顶部底部高度固定和主体</strong>高度自适应。该布局很常见，也是很多 Web 应用主体的主流布局。通常使用<code>&lt;header&gt;、&lt;footer&gt;和&lt;main&gt;</code>三个标签语义化排版，<code>&lt;main&gt;</code>内还可加入<code>&lt;aside&gt;</code>侧栏或其他语义化标签。</p>
+<p>使用 flex 实现会非常简洁：<code>display:flex</code> 默认让子节点横向排列，需声明<code>flex-direction:column</code> 改变子节点排列方向为纵向排列；顶部与底部高度固定，主体声明 <code>flex:1</code> 自适应高度。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;fullscreen-layout&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">header</span>&gt;</span><span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">main</span>&gt;</span><span class="tag">&lt;/<span class="name">main</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">footer</span>&gt;</span><span class="tag">&lt;/<span class="name">footer</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.fullscreen-layout</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-direction</span>: column;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="selector-tag">header</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f66</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">footer</span> &#123;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#66f</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-tag">main</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#3c9</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-47.png"
+                        alt="Flexbox 全屏布局示例"
+                 ></p>
+<p>⚠️ 若 <code>&lt;main&gt;</code> 需表现为可滚动状态，千万不要声明 <code>overflow:auto</code> 让容器自适应滚动，这样做有可能因为其他格式化上下文的影响而导致自适应滚动失效或产生其他未知效果。解决方案是在 <code>&lt;main&gt;</code> 中插入一个 <code>&lt;div&gt;</code> 并声明如下。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.fullscreen-layout</span> &#123;</span><br><span class="line">  <span class="selector-tag">main</span> &#123;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;</span><br><span class="line">    <span class="selector-tag">div</span> &#123;</span><br><span class="line">      <span class="attribute">overflow</span>: auto;</span><br><span class="line">      <span class="attribute">height</span>: <span class="number">100%</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-两列布局"><a href="#5-3-两列布局" class="headerlink" title="5.3 两列布局"></a>5.3 两列布局</h3><p>经典的两列布局由左右两列组成，其特性为<strong>一列宽度固定、另一列宽度自适应和两列高度固定且相等</strong>。以下以左列宽度固定与右列宽度自适应为例，反之同理。</p>
+<p>使用 flex 实现非常简洁。左列声明固定宽度，右列声明 <code>flex:1</code> 自适应宽度。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;two-column-layout&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.two-column-layout</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="comment">/* 左列固定宽度 */</span></span><br><span class="line">  <span class="selector-class">.left</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f66</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* 右列自适应宽度 */</span></span><br><span class="line">  <span class="selector-class">.right</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#66f</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-48.png"
+                        alt="Flexbox 两列布局示例"
+                 ></p>
+<h3 id="5-4-三列布局"><a href="#5-4-三列布局" class="headerlink" title="5.4 三列布局"></a>5.4 三列布局</h3><p>经典的三列布局由左中右三列组成，其特性为<strong>连续两列宽度固定、剩余一列宽度自适应和三列高度固定且相等</strong>。以下以左中列宽度固定与右列宽度自适应为例，反之同理。整体的实现原理与上述两列布局一样。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;three-column-layout&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;center&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.three-column-layout</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="comment">/* 左中列固定宽度 */</span></span><br><span class="line">  <span class="selector-class">.left</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f66</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.center</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#66f</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">/* 右列自适应宽度 */</span></span><br><span class="line">  <span class="selector-class">.right</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#3c9</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-49.png"
+                        alt="Flexbox 三列布局示例"
+                 ></p>
+<h3 id="5-5-圣杯布局-双飞翼布局"><a href="#5-5-圣杯布局-双飞翼布局" class="headerlink" title="5.5 圣杯布局&#x2F;双飞翼布局"></a>5.5 圣杯布局&#x2F;双飞翼布局</h3><p>经典的<strong>圣杯布局</strong>与<strong>双飞翼布局</strong>都是由左中右三列组成，其特性为<strong>左右两列宽度固定、中间一列宽度自适应和三列高度固定且相等</strong>。其实也是上述两列布局与三列布局的变体，整体的实现原理与上述 N 列布局一样，可能就是一些细节需注意。</p>
+<p>圣杯布局与双飞翼布局大体相同但也存在一点不同，区别在于<strong>双飞翼布局</strong>中列需加入一个子节点。在常规实现方式中也是在中列中做文章：如何使中列内容不被左右列遮挡。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;grail-layout&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;center&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.grail-layout</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">400px</span>;</span><br><span class="line">  <span class="selector-class">.left</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f66</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.center</span> &#123;</span><br><span class="line">    <span class="attribute">flex</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#3c9</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="selector-class">.right</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#66f</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/../images/posts/css-flex/css-flex-50.png" alt="Flexbox 圣杯布局/双飞翼布局示例"></p>
+<h2 id="6-Flexbox-间隙"><a href="#6-Flexbox-间隙" class="headerlink" title="6. Flexbox 间隙"></a>6. Flexbox 间隙</h2><p>你可以使用 gap 属性来调整 Flex 子项之间的间距。gap 可以取两个值：第一个值用于行之间的间距，第二个值用于列之间的间距。</p>
+<blockquote>
+<p>注意：gap 属性应用于 Flex 容器，而不是 Flex 子项。</p>
+</blockquote>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">gap</span>: <span class="number">50px</span> <span class="number">10px</span>;</span><br><span class="line">  <span class="comment">/* row-gap column-gap */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-43.png"
+                        alt="Flexbox 间隙示例"
+                 ></p>
+<p>如果你想要的行和列之间的间距相同，你可以使用单个值。浏览器将为行和列都应用相同的值。例如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">gap</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="comment">/* row-gap column-gap */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-44.png"
+                        alt="Flexbox 间隙示例"
+                 ></p>
+<p>如果你需要仅在行之间应用特定的间隙值，你还可以使用属性 <code>row-gap</code> 。如果你需要仅在列之间添加间隙，则使用 <code>column-gap</code> 。例如：仅在行之间添加间隙：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">row-gap</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="comment">/* other styles */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-45.png"
+                        alt="Flexbox 间隙示例"
+                 ></p>
+<p>仅在列之间添加间隙：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.names-container</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: flex;</span><br><span class="line">  <span class="attribute">flex-wrap</span>: wrap;</span><br><span class="line">  <span class="attribute">column-gap</span>: <span class="number">20px</span>;</span><br><span class="line">  <span class="comment">/* other styles */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../images/posts/css-flex/css-flex-46.png"
+                        alt="Flexbox 间隙示例"
+                 ></p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Css/">Css</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Flex/">Flex</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2023/09/28/cache/cache/"
+                                   title="一次线上白屏事故排查引发的前端静态资源缓存的思考"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">一次线上白屏事故排查引发的前端静态资源缓存的思考</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2022/08/01/closures-useCallback-memory-leaks/index/"
+                                   title="useCallback和闭包如何危害你的程序"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">useCallback和闭包如何危害你的程序</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-Flexbox%EF%BC%9F"><span class="nav-text">1. 什么是 Flexbox？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Flexbox%EF%BC%9F"><span class="nav-text">2. 如何使用 Flexbox？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%BB%E8%BD%B4%E5%92%8C%E4%BA%A4%E5%8F%89%E8%BD%B4"><span class="nav-text">2.1 主轴和交叉轴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Flex-%E5%AE%B9%E5%99%A8%E5%92%8C-Flex-%E5%AD%90%E9%A1%B9"><span class="nav-text">2.2 Flex 容器和 Flex 子项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Flex-%E5%92%8C-Inline-flex"><span class="nav-text">2.3 Flex 和 Inline-flex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Flex-%E5%AE%B9%E5%99%A8%E5%B1%9E%E6%80%A7"><span class="nav-text">3. Flex 容器属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-flex-direction-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.1 flex-direction 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-flex-wrap-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.2 flex-wrap 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-flex-flow-%E7%BC%A9%E5%86%99%E5%B1%9E%E6%80%A7"><span class="nav-text">3.3 flex-flow 缩写属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-justify-content-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.4 justify-content 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-align-items-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.5 align-items 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-align-content-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.6 align-content 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-place-content-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.7 place-content 属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Flex-%E5%AD%90%E9%A1%B9%E5%B1%9E%E6%80%A7"><span class="nav-text">4. Flex 子项属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-order-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.1 order 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-align-self-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.2 align-self 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-flex-grow-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.3 flex-grow 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-flex-shrink-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.4 flex-shrink 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-flex-basis-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.5 flex-basis 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-flex-%E7%BC%A9%E5%86%99%E5%B1%9E%E6%80%A7"><span class="nav-text">4.6 flex 缩写属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%B8%80%E4%BA%9B-Flexbox-%E5%B8%B8%E8%A7%81%E7%94%A8%E4%BE%8B"><span class="nav-text">5. 一些 Flexbox 常见用例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%85%83%E7%B4%A0%E5%B1%85%E4%B8%AD"><span class="nav-text">5.1 元素居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%85%A8%E5%B1%8F%E5%B8%83%E5%B1%80"><span class="nav-text">5.2 全屏布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E4%B8%A4%E5%88%97%E5%B8%83%E5%B1%80"><span class="nav-text">5.3 两列布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E4%B8%89%E5%88%97%E5%B8%83%E5%B1%80"><span class="nav-text">5.4 三列布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80-%E5%8F%8C%E9%A3%9E%E7%BF%BC%E5%B8%83%E5%B1%80"><span class="nav-text">5.5 圣杯布局&#x2F;双飞翼布局</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Flexbox-%E9%97%B4%E9%9A%99"><span class="nav-text">6. Flexbox 间隙</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">小举</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF-Flexbox%EF%BC%9F"><span class="nav-text">1. 什么是 Flexbox？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-Flexbox%EF%BC%9F"><span class="nav-text">2. 如何使用 Flexbox？</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%B8%BB%E8%BD%B4%E5%92%8C%E4%BA%A4%E5%8F%89%E8%BD%B4"><span class="nav-text">2.1 主轴和交叉轴</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Flex-%E5%AE%B9%E5%99%A8%E5%92%8C-Flex-%E5%AD%90%E9%A1%B9"><span class="nav-text">2.2 Flex 容器和 Flex 子项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Flex-%E5%92%8C-Inline-flex"><span class="nav-text">2.3 Flex 和 Inline-flex</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Flex-%E5%AE%B9%E5%99%A8%E5%B1%9E%E6%80%A7"><span class="nav-text">3. Flex 容器属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-flex-direction-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.1 flex-direction 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-flex-wrap-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.2 flex-wrap 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-flex-flow-%E7%BC%A9%E5%86%99%E5%B1%9E%E6%80%A7"><span class="nav-text">3.3 flex-flow 缩写属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-justify-content-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.4 justify-content 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-align-items-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.5 align-items 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-align-content-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.6 align-content 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-place-content-%E5%B1%9E%E6%80%A7"><span class="nav-text">3.7 place-content 属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Flex-%E5%AD%90%E9%A1%B9%E5%B1%9E%E6%80%A7"><span class="nav-text">4. Flex 子项属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-order-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.1 order 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-align-self-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.2 align-self 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-flex-grow-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.3 flex-grow 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-flex-shrink-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.4 flex-shrink 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-flex-basis-%E5%B1%9E%E6%80%A7"><span class="nav-text">4.5 flex-basis 属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-flex-%E7%BC%A9%E5%86%99%E5%B1%9E%E6%80%A7"><span class="nav-text">4.6 flex 缩写属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E4%B8%80%E4%BA%9B-Flexbox-%E5%B8%B8%E8%A7%81%E7%94%A8%E4%BE%8B"><span class="nav-text">5. 一些 Flexbox 常见用例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%85%83%E7%B4%A0%E5%B1%85%E4%B8%AD"><span class="nav-text">5.1 元素居中</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%85%A8%E5%B1%8F%E5%B8%83%E5%B1%80"><span class="nav-text">5.2 全屏布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E4%B8%A4%E5%88%97%E5%B8%83%E5%B1%80"><span class="nav-text">5.3 两列布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E4%B8%89%E5%88%97%E5%B8%83%E5%B1%80"><span class="nav-text">5.4 三列布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E5%9C%A3%E6%9D%AF%E5%B8%83%E5%B1%80-%E5%8F%8C%E9%A3%9E%E7%BF%BC%E5%B8%83%E5%B1%80"><span class="nav-text">5.5 圣杯布局&#x2F;双飞翼布局</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-Flexbox-%E9%97%B4%E9%9A%99"><span class="nav-text">6. Flexbox 间隙</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/libs/anime.min.js"></script>
+
+<!-- local search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/lazyload.min.js"></script>
+
+
+<div class="pjax">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+
+</body>
+</html>

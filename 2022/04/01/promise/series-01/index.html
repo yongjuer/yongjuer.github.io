@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="记录生活，分享技术，分享生活。">
+    <meta name="author" content="小举">
+    
+    <title>
+        
+            全面理解 Promise 系列（一)：Promise 基础 |
+        
+        小举的阿勒泰
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/brands.min.css">
+    
+        
+            
+                
+<link rel="stylesheet" href="/css/custom.css">
+
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"yongjuer.site","root":"/","language":"zh-CN","path":"search.xml"}
+    KEEP.theme_config = {"base_info":{"primary_color":"rgba(211, 84, 0,1.0)","title":"小举的阿勒泰","author":"小举","avatar":"/images/avatar.png","logo":"/images/avatar.png","favicon":"/images/logo.png"},"menu":{"home":"/ || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags || fa-solid fa-tags","categories":"/categories || fa-solid fa-layer-group","tools":"/tools || fa-solid fa-tools"},"first_screen":{"enable":true,"background_img":"/images/background.jpg","background_img_dark":"/images/background.jpg","description":null,"hitokoto":true},"social_contact":{"enable":false,"links":{"github":null,"weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"created"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":["炼气","筑基","结丹","元婴","化神"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null},"updated_datetime_icon":"fa-solid fa-arrows-rotate","created_datetime_icon":"fa-solid fa-feather"},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":3},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":true},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2021,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":true,"css":[["/css/custom.css"]],"js":[null]},"root":"","source_data":{"tools":[{"category":"聊天 AI","anchorId":"JUU4JTgxJThBJUU1JUE0JUE5JTIwQUk0"},{"name":"ChatGPT","link":"https://chat.openai.com/","description":"OpenAI 旗下 AI 聊天对话工具","image":"/images/tools/chatgpt.svg"},{"name":"Gemini","link":"https://gemini.google.com/app","description":"Google 旗下 AI 聊天对话工具","image":"/images/tools/gemini.svg"},{"name":"Copilot","link":"https://copilot.microsoft.com/","description":"微软旗下的日常 AI 助手","image":"/images/tools/copilot.png"},{"name":"文心一言","link":"https://yiyan.baidu.com/","description":"百度旗下 AI 聊天对话工具","image":"/images/tools/wenxinyiyan.png"},{"name":"通义千问","link":"https://tongyi.aliyun.com/qianwen/","description":"阿里巴巴旗下 AI 聊天对话工具","image":"/images/tools/tongyiqianwen.svg"},{"name":"讯飞星火","link":"https://xinghuo.xfyun.cn/","description":"科大讯飞星火认知 AI 大模型","image":"/images/tools/xinghuo.svg"},{"category":"绘画 AI","anchorId":"JUU3JUJCJTk4JUU3JTk0JUJCJTIwQUk7"},{"name":"Midjourney","link":"https://www.midjourney.com/","description":"AI 图像和插画生成工具","image":"/images/tools/midjourney.png"},{"name":"Adobe Firefly","link":"https://firefly.adobe.com/","description":"Adobe 推出的 AI 图像生成和编辑工具","image":"/images/tools/adobe-firefly.svg"},{"name":"Stable Diffusion","link":"https://stability.ai/","description":"最强开源 AI 绘画工具","image":"/images/tools/stability.png"},{"name":"Microsoft Designer","link":"https://designer.microsoft.com/home","description":"微软推出的在线设计海报和宣传图工具","image":"/images/tools/microsoft-designer.svg"},{"name":"文心一格","link":"https://yige.baidu.com/","description":"百度出品的 AI 绘画工具","image":"/images/tools/wenxinyiyan.png"},{"category":"技术社区","anchorId":"JUU2JThBJTgwJUU2JTlDJUFGJUU3JUE0JUJFJUU1JThDJUJB13"},{"name":"稀土掘金","link":"https://juejin.cn/","description":"一个帮助开发者成长的社区","image":"/images/tools/juejin.svg"},{"name":"V2EX","link":"https://www.v2ex.com/","description":"创意工作者们的社区","image":"/images/tools/v2ex.png"},{"name":"思否","link":"https://segmentfault.com/","description":"中国领先的开发者技术社区","image":"/images/tools/segmentfault.svg"},{"name":"博客园","link":"https://www.cnblogs.com/","description":"开发者的网上家园","image":"/images/tools/cnblogs.png"},{"name":"W2Solo","link":"https://w2solo.com/","description":"中文独立开发者社区","image":null},{"name":"电鸭社区","link":"https://eleduck.com/","description":"专注远程工作招聘交流","image":"/images/tools/dianyashequ.png"},{"name":"StackOverflow","link":"https://stackoverflow.com/","description":"全球最大的技术问答社区","image":"/images/tools/stackoverflow.png"},{"name":"开源中国","link":"https://www.oschina.net/","description":"目前国内最大的开源技术社区","image":"/images/tools/oschina.webp"},{"name":"InfoQ","link":"https://www.infoq.cn/","description":"一个实践驱动的技术社区资讯站点","image":"/images/tools/infoq.png"},{"name":"51CTO","link":"https://www.51cto.com/","description":"中国领先的 IT 技术网站","image":"/images/tools/51cto.webp"},{"name":"CSDN","link":"https://www.csdn.net/","description":"中文最大的技术社区","image":"/images/tools/csdn.png"},{"category":"部署托管","anchorId":"JUU5JTgzJUE4JUU3JUJEJUIyJUU2JTg5JTk4JUU3JUFFJUEx25"},{"name":"GitHub Pages","link":"https://pages.github.com/","description":"通过 GitHub 托管和发布的公共网页","image":"/images/tools/github.svg"},{"name":"Vercel","link":"https://vercel.com/","description":"Vercel's Frontend Cloud provides the developer experience and infrastructure to build, scale, and secure a faster, more personalized web.","image":"/images/tools/vercel.svg"},{"name":"Cloudflare Pages","link":"https://developers.cloudflare.com/pages/","description":"Create full-stack applications that are instantly deployed to the Cloudflare global network.","image":"/images/tools/cloudflare.svg"},{"name":"Netlify","link":"https://www.netlify.com/","description":"Netlify is the essential platform for the delivery of exceptional and dynamic web experiences, without limitations.","image":"/images/tools/netlify.svg"},{"name":"Railway","link":"https://railway.app/","description":"Railway is the cloud for building, shipping, and monitoring applications.","image":"/images/tools/railway.svg"},{"name":"Zeabur","link":"https://zeabur.com","description":"Say goodbye to deployment hassles. With Zeabur, bring your coding genius to life swiftly and smoothly.","image":"/images/tools/zeabur.png"}]},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小举的阿勒泰" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/avatar.png">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               小举的阿勒泰
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tools">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-tools"></i>
+                                
+                                工具
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="menu-text-color fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-home"></i>
+                                </span>
+                            
+                            首页
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-box-archive"></i>
+                                </span>
+                            
+                            归档
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-tags"></i>
+                                </span>
+                            
+                            标签
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-layer-group"></i>
+                                </span>
+                            
+                            分类
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tools">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-tools"></i>
+                                </span>
+                            
+                            工具
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+                <div class="post-content-top border-box"
+                     style="height: 13.8rem"
+                >
+                    <div class="cover-post-title">
+                        全面理解 Promise 系列（一)：Promise 基础
+                    </div>
+                    <img class="post-cover" src="/images/posts/promise_js.png"
+                         onerror="this.style.display='none'"
+                    >
+                </div>
+            
+
+            <div class="post-content-bottom border-box has-cover">
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.png">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">小举</span>
+                                
+                                    <span class="author-badge">筑基</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-feather"></i>&nbsp;
+                <span class="datetime">2022-04-01</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-arrows-rotate"></i>&nbsp;
+                    <span class="datetime" data-updated="Mon Jun 17 2024 05:54:12 GMT+0000">2024-06-17</span>
+                </span>
+            
+        
+
+        
+            <span class="meta-info-item post-category border-box"><i class="icon fas fa-folder"></i>&nbsp;
+                <ul class="post-category-ul">
+                    
+                            <li class="category-item"><a href="/categories/JavaScript/">JavaScript</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/JavaScript/">JavaScript</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/Promise/">Promise</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>5.5k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>21 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <p>虽然 Promise 通常与异步操作相关，但他其实只是值的“<strong>临时占位服务</strong>”，该值可能是已知的或更常见的是该值是一个异步操作的结果，所有函数都可以返回一个 Promise ，而不用像以前一样订阅(subscribe)一个事件或传递一个回调(callback)给该函数。举例如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// fetch() 承诺会在未来的某个时刻返回</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="title function_">fetch</span>(<span class="string">&#x27;book.json&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>fetch()</code>函数是 JavaScript 运行环境中的一个常见的实用函数，用来发出网络请求，<code>fetch()</code>实际上不会立刻完成该请求，而是过一会儿才完成。因此，该函数返回的是一个代表异步操作结果的 Promise （对象在本地中该 Promise 对象存储在名为 Promise 的变量中但<strong>其实你可以任意命名这个变量</strong>），这样你就可以在将来使用它，具体什么时候能使用这个结果，完全取决于该 Promise 的生命周期。</p>
+<h2 id="1-1-Promise-的生命周期"><a href="#1-1-Promise-的生命周期" class="headerlink" title="1.1 Promise 的生命周期"></a>1.1 Promise 的生命周期</h2><p>每个 Promise 都会经历一个短暂的生命周期，这个生命周期从待定 <code>(pending)</code>状态开始，待定状态表明该 Promise 还没有完成。一个处于待定状态的 Promise 被认为是未确定的。在前面的例子中 Promise 在 <code>fetch()</code> 函数返回时就处于待定<code>(pending)</code>状态，一旦完成，该 Promise 就被视为已确定，并进入以下两种可能的状态之一:</p>
+<ul>
+<li>履行（fulfilled）状态：该 Promise 已经成功地完成了其承诺，并将其值作为结果返回。</li>
+<li>拒绝（rejected）状态：该 Promise 由于错误或其他原因没有被成功完成， 也就是被拒绝了。</li>
+</ul>
+<p>内部属性<code>[[PromiseState]]</code>可以被设置为 <code>pending</code>、<code>fulfilled</code> 或 <code>rejected</code>反映 Promise 的状态，因为这个属性在 Promise 对象上是非公开的，所以我们无法通过编程来确定 Promise 处于哪个状态，不过我们可以在 Promise 的状态改变时通过<code>then()</code>方法来指定具体的行为。</p>
+<h3 id="1-1-1-用-then-分配处理器"><a href="#1-1-1-用-then-分配处理器" class="headerlink" title="1.1.1 用 then() 分配处理器"></a>1.1.1 用 then() 分配处理器</h3><p><code>then()</code>方法存在于所有 Promise 中，它有两个参数。第一个参数是当 Promise 被履行时<code>(fulfilled)</code>要调用的函数，被称为<strong>履行处理器</strong>（fulfillment handler），任何异步操作被履行相关的额外数据都会作为参数被传递给这个函数。第二个参数是当 Promise 被拒绝时<code>(rejected)</code>要调用的函数，被称为<strong>拒绝处理器</strong>（rejection handler），任何与异步操作被拒绝相关的错误信息都会作为参数被传递给这个函数。</p>
+<blockquote>
+<p>💡 任何以上述方式实现 then() 方法的对象都被称为 <strong>thenable</strong> 对象。所有 Promise 对象都是 thenable，但并非所有 thenable 都是 Promise 。</p>
+</blockquote>
+<p>因为 <code>then()</code>的两个参数都是可选的，所以你可以选择性的监听履行状态、拒绝状态或者两者的任意组合。来看以下这组 <code>then()的</code>调用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加履行处理器和拒绝处理器</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="title function_">fetch</span>(<span class="string">&#x27;book.json&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(</span><br><span class="line">  <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// fulfilled</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request succeeded with response&#x27;</span>， response.<span class="property">status</span>);</span><br><span class="line">  &#125;，</span><br><span class="line">  (reason) =&gt; &#123;</span><br><span class="line">    <span class="comment">// rejected</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request failed with error&#x27;</span>， reason.<span class="property">message</span>);</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加另外一个履行处理器</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// fulfilled</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request succeeded with data&#x27;</span>， response.<span class="property">statusText</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加另外一个拒绝处理器</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(<span class="literal">null</span>， (reason) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request failed with error&#x27;</span>， reason.<span class="property">message</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>3 个 <code>then()</code>调用都作用于同一个 Promise 对象，第一个 <code>then()</code>调用分配了一个履行处理器和一个拒绝处理器，第二个 <code>then()</code>调用只分配了一个履行处理器，该异步请求产生的错误不会报告给程序。第三个 <code>then()</code>调用只分配了一个拒绝处理器，该异步请求的成功完成不会被报告给程序。</p>
+<blockquote>
+<p>⚠️ <code>fetch()</code>函数的一个异常行为是：只要它收到一个 HTTP 状态码，哪怕是 404 或者 500，返回的 Promise 都会被视为 fulfilled，并将响应对象作为结果返回。只有当网络请求因为某种原因失败的时候， Promise 才会处于拒绝状态。因此，你需要在 <code>then()</code>调用中检查响应对象的状态码，已确定请求是否成功，如下所示：</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&#x27;book.json&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (response.<span class="property">ok</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request succeeded.&#x27;</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request failed.&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-1-2-用-catch-分配拒绝处理器"><a href="#1-1-2-用-catch-分配拒绝处理器" class="headerlink" title="1.1.2 用 catch() 分配拒绝处理器"></a>1.1.2 用 catch() 分配拒绝处理器</h3><p>Promise 还有一个名为 <code>catch()</code> 的方法。当只传递一个拒绝处理器时，它的行为与 <code>then()</code> 类似。比如下面的 <code>catch()</code> 调用和 <code>then()</code> 调用在功能上是等价的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="title function_">fetch</span>(<span class="string">&#x27;book.json&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">catch</span>(<span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// rejected</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request failed with error&#x27;</span>， reason.<span class="property">message</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 等同于</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(<span class="literal">null</span>， (reason) =&gt; &#123;</span><br><span class="line">  <span class="comment">// rejected</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request failed with error&#x27;</span>， reason.<span class="property">message</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><code>then()</code> 和 <code>catch()</code> 的根本目的是让你把它们结合起来使用，从而指明如何处理结果。这个组合比事件处理器和回调函数更好，因为它清楚地展示了操作成功与否。（事件处理器往往不会在出现错误时被触发， 而是在回调函数中，你必须随时记得检查可能出现的错误并手动处理。） 如果你不给一个被拒绝的 Promise 添加拒绝处理器， 那么 JavaScript <strong>运行环境</strong> （浏览器或 Node）就会向控制台输出一条错误消息， 或者抛出一个错误对象，又或者两者都有（具体取决于 JavaScript 运行环境）。</p>
+<h3 id="1-1-3-用-finally-分配解决处理器"><a href="#1-1-3-用-finally-分配解决处理器" class="headerlink" title="1.1.3 用 finally() 分配解决处理器"></a>1.1.3 用 finally() 分配解决处理器</h3><p>除了<code>then()</code>和<code>catch()</code>， Promise 还有<code>finally()</code>， 无论异步操作是成功还是失败，只要操作完成， 那么传给<code>finally()</code>的回调函数(被称为<strong>解决处理器</strong>)就会被调用， 与传给<code>then()</code>和<code>catch()</code>的回调函数不同， <strong>传给<code>finally()</code>的回调函数不接受任何参数</strong>， 因为我们不清楚 Promise 是被履行了还是被拒绝了， 因为解决处理器在 Promise <strong>被履行和被拒绝时都会被调用</strong>， 所以它类似于使用<code>then()</code>时将同一个函数传递给 Promise 的履行处理器和拒绝处理器。以下是一个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="title function_">fetch</span>(<span class="string">&#x27;book.json&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 我们不知道 Promise 是被履行还是被拒绝， 所以我们不接受任何参数</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request completed.&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类似于</span></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">callback</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request completed.&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(callback， callback);</span><br></pre></td></tr></table></figure>
+
+<p>只要不访问回调函数的参数，这两个例子所表现出的行为就是一致的。然而，与<code>then()</code>相比，使用<code>finally()</code>可以更清晰地表达你的意图，这一点和<code>catch()</code>一样。</p>
+<p>当你希望知道一个操作已经完成，但并不关心结果时，解决处理器很有用。举个例子，假设你想在<code>fetch()</code>请求处于活跃状态时在网页上显示一个加载指示器，然后在<code>fetch()</code>请求完成后隐藏该加载指示器。在这种情况下，该请求本身是否成功并不重要，因为一旦请求完成，加载指示器就应该隐藏。如下代码，可在你的 Web 应用程序中满足上述需求。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> appElement = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;app&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="title function_">fetch</span>(<span class="string">&#x27;book.json&#x27;</span>);</span><br><span class="line"></span><br><span class="line">appElement.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="string">&#x27;loading&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 处理成功</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">catch</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 处理失败</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">finally</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  appElement.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="string">&#x27;loading&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在这里，AppElement 代表在网页上包裹整个应用程序的 HTML 元素。使用<code>fetch()</code>发起一个网络请求，添加 CSS 类 loading 到该 HTML 元素中(这样做便可以适当地改变该元素的样式)。当网络请求完成后， Promise 的状态已确定，解决处理器将该 loading 类从 HTML 元素中移除，以重置应用程序的状态。你仍然可以使用<code>then()</code>和<code>catch()</code>来响应请求成功和失败的结果， 而<code>finally()</code><strong>只处理状态从不确定到确定的变更</strong>。如果没有<code>finally()</code>，你就需要在履行处理器和拒绝处理器中都删除该 loading 类。</p>
+<blockquote>
+<p>⚠️ 注意: 通过<code>finally()</code>添加的解决处理器并不能避免由于请求被拒绝而向控制台输出或抛出错误， 你仍需要添加一个拒绝处理器来避免这种情况。</p>
+</blockquote>
+<h3 id="1-1-4-为已确定的-Promise-分配处理器"><a href="#1-1-4-为已确定的-Promise-分配处理器" class="headerlink" title="1.1.4 为已确定的 Promise 分配处理器"></a>1.1.4 为已确定的 Promise 分配处理器</h3><p>即使履行处理器、拒绝处理器或解决处理器是在 Promise 状态已确定的情况下添加的，该处理器也仍然会被执行。这样一来，你便可以在<strong>任何时候</strong>添加新的处理器和拒绝处理器，并确保它们会被调用。来看以下例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="title function_">fetch</span>(<span class="string">&#x27;book.json&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 原来的履行处理器</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request succeeded&#x27;</span>， response.<span class="property">status</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 现在再添加另外一个新的履行处理器</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(<span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Request succeeded&#x27;</span>， response.<span class="property">statusText</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在这段代码中，原来的履行处理器在同一个 Promise 上添加了另一个旅履行处理器，此时该 Promise 已经处于履行状态，所以新的履行处理器被添加到<strong>微任务</strong>（microtask）的队列中，并在就绪时被调用。拒绝处理器和解决处理器的工作方式也是如此。</p>
+<h3 id="1-1-5-处理器和微任务"><a href="#1-1-5-处理器和微任务" class="headerlink" title="1.1.5 处理器和微任务"></a>1.1.5 处理器和微任务</h3><p>在常规的程序执行流程中，JavaScript 代码是被当作一个<strong>任务</strong>来执行的。也就是说，JavaScript 会创建一个新的执行环境，彻底的执行代码，并在完成后退出。比如，网页中的一个按钮对应的<code>onclick</code>处理器被当作一个任务来执行。当该按钮被点击时，JavaScript 会创建一个新的任务，并执行<code>onclick</code>处理器。一旦执行完成，JavaScript 就会原地待命，等待下一次用户交互来执行更多的代码。然而， Promise 的处理器则是以一种不同的方式来执行的。</p>
+<p>所有的 Promise 处理器，无论是履行处理器，拒绝处理器，还是解决处理器，都被作为<strong>JavaScript 引擎</strong>内部的微任务执行。微任务被排在对列中，JavaScript 会在执行完当前任务后立即执行下一个任务。当 Promise 的状态确定后，对<code>then()</code>，<code>catch()</code>和<code>finally()</code>的调用<strong>会将指定的处理器排在微任务队列之中</strong>。这与通过 <code>setTimeout</code> 或 <code>setInterval</code> 创建定时器不同，这两个函数所创建的新任务会在之后某个时刻执行。在微任务队列中的 Promise 处理器则一定会在同一代码脚本任务中排队的定时器<strong>之前</strong>执行。你可以通过使用全局的 queenMicroTask 函数来测试这一点。该函数可用于在无 Promise 的情况下创建微任务。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Timer task&#x27;</span>);</span><br><span class="line"></span><br><span class="line">  <span class="title function_">queueMicrotask</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Microtask task in timer&#x27;</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;， <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="title function_">queueMicrotask</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Microtask&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>以上代码创建了一个延迟为 0 毫秒的定时器，并在该定时器中创建了一个新的微任务。此外，这段代码还在定时器以外创建了一个微任务。当这段代码执行时，你会在控制台中看到以下输出内容。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;Microtask&#x27;</span>;</span><br><span class="line"><span class="string">&#x27;Timer task&#x27;</span>;</span><br><span class="line"><span class="string">&#x27;Microtask task in timer&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>尽管定时器的延迟被设置为 0 毫秒，<strong>但微任务还是先于定时器执行</strong>，其次是定时器，最后才是定时器内的微任务。<strong>关于微任务(包括所有的 Promise 处理器)，最重要的一点是，它们会在主任务完成后立即执行。</strong> 这最大限度地缩短了解决 Promise 和对解决本身作出反应之间的时间间隔，从而使 Promise 适用于对运行时效有所要求的情况。</p>
+<h2 id="1-2-创建未解决的-Promise"><a href="#1-2-创建未解决的-Promise" class="headerlink" title="1.2 创建未解决的 Promise"></a>1.2 创建未解决的 Promise</h2><p>新的 Promise 由 Promise 对象的构造函数来创建。这个构造函数接受一个被称为<strong>执行器</strong> (executor) 的函数作为参数。该执行器包含初始化 Promise 所需要的代码。执行器接受两个参数，是分别名为 <code>resolve</code> 和 <code>reject</code> 函数。当执行器完成以后，调用 <code>resolve()</code> 函数以表示 Promise 操作成功完成。当执行器操作失败时，则调用 <code>reject()</code> 函数以示 Promise 操作失败。<br>下面是一个使用旧的 XMLHttpRequest 浏览器<strong>应用程序接口</strong>的例子:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">requestURL</span>(<span class="params">url</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 分配事件处理器</span></span><br><span class="line">    xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">resolve</span>(&#123;</span><br><span class="line">        <span class="attr">status</span>: xhr.<span class="property">status</span>,</span><br><span class="line">        <span class="attr">text</span>: xhr.<span class="property">responseText</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;error&#x27;</span>, <span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">reject</span>(error);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发出请求</span></span><br><span class="line">    xhr.<span class="title function_">open</span>(<span class="string">&#x27;GET&#x27;</span>, url);</span><br><span class="line">    xhr.<span class="title function_">send</span>();</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="title function_">requestURL</span>(<span class="string">&#x27;book.json&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 监听履行和拒绝的状态</span></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(</span><br><span class="line">  <span class="function">(<span class="params">response</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 履行</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(response.<span class="property">status</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="function">(<span class="params">reason</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 拒绝</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(reason.<span class="property">message</span>);</span><br><span class="line">  &#125;</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，XMLHttpRequest 的调用被包裹在一个 Promise 中。<code>load</code> 事件表明该请求已经成功完成，因此 Promise 执行器在事件处理器中调用了 <code>resolve()</code>。与之类似，<code>error</code> 事件则表明该请求无法顺利完成，因此 Promise 执行器在该事件处理器中调用了 <code>reject</code>。你可以通过重复这个过程来将基于事件的功能转换为基于 Promise 的功能。</p>
+<p><strong>执行器的重要性在于它在创建 Promise 时会立即运行</strong>。在之前的例子中，我们创建 xhr 对象，分配事件处理器，并在 Promise 从 <code>requestURL()</code> 返回之前启动调用。当执行器调用 <code>resolve()</code> 或 <code>reject()</code> 时， Promise 的状态和值被<strong>立即</strong>设置，但<strong>所有 Promise 处理器作为微任务将暂时不会执行</strong>，直到当前的脚本工作完成。假如你在执行器内部立即调用 <code>resolve()</code>，试想会发生什么?</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Executor&#x27;</span>);</span><br><span class="line">  <span class="title function_">resolve</span>(<span class="number">42</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;End of script&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，我们创建了一个 Promise ，并立即调用了 <code>resolve()</code> 函数， Promise 被立即解决，没有任何延迟。然后，我们通过 <code>then()</code> 添加了一个履行处理器来输出操作结果。虽然在添加处理器的时候，该 Promise 已经被解决，但是输出结果仍然如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;Executor&#x27;</span>;</span><br><span class="line"><span class="string">&#x27;End of script&#x27;</span>;</span><br><span class="line"><span class="number">42</span>;</span><br></pre></td></tr></table></figure>
+
+<p>这说明， Promise 的执行器首先同步运行并将 “Executor” 打印到控制台中。接着，履行处理器被添加，<strong>但是不会立即执行</strong>。这段代码会创建一个新的微任务，它将在当前脚本工作完成之后被执行。这意味着 <code>console.log(&#39;End of script&#39;)</code>这句代码会在执行履行处理器之前被执行，在当前脚本的其他部分完成后才输出 42。</p>
+<blockquote>
+<p>💡 <strong>一个 Promise 只能被解决一次</strong>。如果你在一个执行器中多次调用 <code>resolve()</code>，那么第一次调用之后的每一次调用都会被忽略。</p>
+</blockquote>
+<p><strong>执行器错误</strong>：如果执行器抛出错误，那么 Promise 的拒绝处理器就会被调用，如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Something went wrong&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(error.<span class="property">message</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在这段代码中，执行器故意抛出一个错误。<strong>每个执行器内部都有一个隐式的 <code>try-catch</code> 块</strong>，如果执行器抛出错误，那么该错误会被捕获并交给拒绝处理器处理。前面的例子和如下的例子效果相同：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title class_">Promise</span> = <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Something went wrong&#x27;</span>);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">    <span class="title function_">reject</span>(error);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><strong>执行器可以捕获任何被抛出的错误</strong>，从而简化这种常见的情况的处理流程。如果没有分配拒绝处理器，JavaScript 引擎就会抛出错误并停止运行当前程序。</p>
+<h2 id="1-3-创建已解决的-Promise"><a href="#1-3-创建已解决的-Promise" class="headerlink" title="1.3 创建已解决的 Promise"></a>1.3 创建已解决的 Promise</h2><p>由于 Promise 执行器的行为是动态的，因此 Promise 对象的构造函数是创建<strong>未解决的 Promise</strong>的最佳工具。不过，如果想让 Promise 表示先前已经计算出的值，那么仅仅创建一个将值传递给 <code>resolve()</code> 或 <code>reject()</code> 的执行器变没有什么实际意义。有两个方法可以根据确定的值来创建已解决的 Promise。</p>
+<h3 id="1-3-1-使用-Promise-resolve"><a href="#1-3-1-使用-Promise-resolve" class="headerlink" title="1.3.1 使用 Promise.resolve()"></a>1.3.1 使用 Promise.resolve()</h3><p><code>Promise.resolve()</code>方法接受一个参数并返回一个处于履行状态的 Promise 。这意味着如果你已经知道了 Promise 的值，就不必再提供执行器。来看一下这个例子:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="number">42</span>);</span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(value); <span class="comment">// 42</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>自带代码创建了一个已履行的 Promise ，因此履行处理器会收到 42 这个值。和本章中的其他例子一样，履行处理器在当前脚本工作完成后作为一个微任务执行。如果给这个 Promise 添加了拒绝处理器，那么拒绝处理器将永远不会被调用，因为这个 Promise 永远不会处于拒绝状态。</p>
+<p>如果你把一个 Promise 传递给<code>Promise.resolve()</code>，那么该方法就会返回你传递的那个 Promise 对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise1 = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(<span class="number">42</span>);</span><br><span class="line"><span class="keyword">const</span> promise2 = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(promise1);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(promise1 === promise2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-2-使用-Promise-reject"><a href="#1-3-2-使用-Promise-reject" class="headerlink" title="1.3.2 使用 Promise.reject()"></a>1.3.2 使用 Promise.reject()</h3><p>你也可以通过使用<code>Promise.reject()</code>来创建处于拒绝状态的 Promise 对象。这与<code>Promise.resolve()</code>的工作原理类似，只不过创建的 Promise 是处于拒绝状态的，如下所示:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> promise = <span class="title class_">Promise</span>.<span class="title function_">reject</span>(<span class="number">42</span>);</span><br><span class="line">promise.<span class="title function_">catch</span>(<span class="function">(<span class="params">error</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(error); <span class="comment">// 42</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>添加的该 Promise 中的任何额外的拒绝处理器都会被调用，但履行处理器不会被调用，因为该 Promise 永远不会处于履行状态。</p>
+<h3 id="1-3-3-非-Promise-的-thenable-对象"><a href="#1-3-3-非-Promise-的-thenable-对象" class="headerlink" title="1.3.3 非 Promise 的 thenable 对象"></a>1.3.3 非 Promise 的 thenable 对象</h3><p><code>Promise.resolve()</code>和<code>Promise.reject()</code>也接受非 Promise 的 thenable 对象作为参数。当传递一个非 Promise 的 thenable 对象时，这些方法会基于该 thenable 对象已确定的值和状态，创建一个新的 Promise 对象。</p>
+<p>当一个对象有一个 <code>then()</code> 方法，并且可接参数 resolve 函数和 reject 函数作为参数，我们就认为该对象是一个非 Promise 的 thenable 对象，举例如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> thenable = &#123;</span><br><span class="line">  <span class="attr">then</span>: <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">resolve</span>(<span class="number">42</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>除了 <code>then()</code> 方法,这个例子中的 thenable 对象没有其他与 Promise 对象相关联的特征。你可以通过调用<code>Promise.resolve()</code>来将 thenable 对象转换为处于履行状态的 Promise 对象:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> thenable = &#123;</span><br><span class="line">  <span class="attr">then</span>: <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">resolve</span>(<span class="number">42</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promise = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(thenable);</span><br><span class="line"></span><br><span class="line">promise.<span class="title function_">then</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(value); <span class="comment">// 42</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，<code>Promise.resolve()</code>通过调用 <code>thenable.then()</code> 来确定该 Promise 的状态，因为在 <code>then()</code> 方法中调用了 <code>resolve(42)</code>，所以 thenable 的 Promise 对象处于履行状态。因此，以上代码创建了一个处于履行状态的 Promise 对象，名为 promise。该 Promise 对象的履行处理器接收来自 thenable 对象的 42，作为其值。</p>
+<p>同理，可以用<code>Promise.resolve()</code>来从 thenable 创建一个处于拒绝状态的 Promise ，如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> thenable = &#123;</span><br><span class="line">  <span class="attr">then</span>: <span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">reject</span>(<span class="number">42</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promise = <span class="title class_">Promise</span>.<span class="title function_">resolve</span>(thenable);</span><br><span class="line"></span><br><span class="line">promise.<span class="title function_">catch</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(value); <span class="comment">// 42</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这个例子与上一个例子相似，只不过 thenable 对象处于拒绝状态。当 <code>thenable.then()</code> 执行时，它会创建一个处于拒绝状态的 Promise 对象，其值为 42，这个值会被传递给 Promise 的拒绝处理器。</p>
+<p><code>Promise.resolve()</code> 和 <code>Promise.reject()</code>的这种功能使得它们成为处理非 Promise 值和 thenable 对象的有用工具。在 2015 年 ECMAScript 引入 Promise 之前，很多库使用 thenable 对象。 因此， 能够将 thenable 对象转换为 Promise 对象对于兼容之前的库来说非常重要。</p>
+<p>当你不确定一个对象是否是一个 Promise 时，通过 <code>Promise.resolve()</code> 或 <code>Promise.reject()</code> 传递该对象是找出答案的最佳方法，因为 Promise 只会被原样传回。</p>
+<h2 id="1-4-小结"><a href="#1-4-小结" class="headerlink" title="1.4 小结"></a>1.4 小结</h2><ul>
+<li>Promise 是值的”<strong>临时站位符</strong>“，这个值将在以后某个时间点作为某个异步操作的结果来提供给当前程序。 你可以使用 Promise 来表示操作的结果，而无需使用事件处理器或回调函数。</li>
+<li>Promise 有三种状态：待定<code>(pending)</code>、履行<code>(fulfilled)</code>和拒绝<code>(rejected)</code>。一个 Promise 从待定状态(未确定的状态)开始，在成功执行时进入履行状态，在失败时进入拒绝状态。（履行状态和拒绝状态都是已确定的状态）无论是哪种情况都可以通过添加处理器来表明该 Promise 的状态已确定。</li>
+<li><code>then()</code>方法可以用于分配履行处理器和拒绝处理器，<code>catch()</code> 方法可用于分配拒绝处理器。<code>finally()</code>方法可用于分配解决处理器。无论操作结果是成功还是失败，解决处理器<code>(finally)</code>都会被调用。</li>
+<li>因为所有的 Promise 处理器都是被作为<strong>微任务</strong>来执行的，所以他们在当前脚本工作完成之前不会执行。</li>
+<li>你可以使用构造函数来创建处于未确定状态的 Promise 对象，该构造函数接受一个执行器函数（Executor）作为其唯一的参数。执行器函数被传入<code>resolve</code>和<code>reject</code>两个参数，分别用以表明 Promise 是成功还是失败。</li>
+<li><strong>执行器在创建 Promise 时立即执行</strong>。这与被作为微任务运行的处理器不同，执行器抛出的任何错误都会被自动捕获并传递给 reject。</li>
+<li>可以使用 <code>Promise.resolve()</code> 来创建处于履行状态的 Promise，或使用 <code>Promise.reject()</code> 来创建处于拒绝状态的 Promise。 这两个方法都会把传入的参数包裹在 Promise 中(如果该参数不是一个 Promise 对象，也不是一个非 Promise 的 thenable 对象)，并创建一个新的 Promise 对象，或将原来的 Promise 对象原样传递。当你不确定某对象是否是 Promise，但又希望它表现得像 Promise 时，这些方法很有帮助。</li>
+</ul>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/JavaScript/">JavaScript</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/Promise/">Promise</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2022/04/10/promise/series-02/"
+                                   title="全面理解 Promise 系列（二)：链式 Promise"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">全面理解 Promise 系列（二)：链式 Promise</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2022/03/20/basic-git-usage/"
+                                   title="常用的 git 命令清单"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">常用的 git 命令清单</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Promise-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-text">1.1 Promise 的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E7%94%A8-then-%E5%88%86%E9%85%8D%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">1.1.1 用 then() 分配处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E7%94%A8-catch-%E5%88%86%E9%85%8D%E6%8B%92%E7%BB%9D%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">1.1.2 用 catch() 分配拒绝处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-%E7%94%A8-finally-%E5%88%86%E9%85%8D%E8%A7%A3%E5%86%B3%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">1.1.3 用 finally() 分配解决处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-4-%E4%B8%BA%E5%B7%B2%E7%A1%AE%E5%AE%9A%E7%9A%84-Promise-%E5%88%86%E9%85%8D%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">1.1.4 为已确定的 Promise 分配处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-5-%E5%A4%84%E7%90%86%E5%99%A8%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="nav-text">1.1.5 处理器和微任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%88%9B%E5%BB%BA%E6%9C%AA%E8%A7%A3%E5%86%B3%E7%9A%84-Promise"><span class="nav-text">1.2 创建未解决的 Promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%88%9B%E5%BB%BA%E5%B7%B2%E8%A7%A3%E5%86%B3%E7%9A%84-Promise"><span class="nav-text">1.3 创建已解决的 Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-%E4%BD%BF%E7%94%A8-Promise-resolve"><span class="nav-text">1.3.1 使用 Promise.resolve()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E4%BD%BF%E7%94%A8-Promise-reject"><span class="nav-text">1.3.2 使用 Promise.reject()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-%E9%9D%9E-Promise-%E7%9A%84-thenable-%E5%AF%B9%E8%B1%A1"><span class="nav-text">1.3.3 非 Promise 的 thenable 对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%B0%8F%E7%BB%93"><span class="nav-text">1.4 小结</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">小举</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Promise-%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-text">1.1 Promise 的生命周期</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-%E7%94%A8-then-%E5%88%86%E9%85%8D%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">1.1.1 用 then() 分配处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-%E7%94%A8-catch-%E5%88%86%E9%85%8D%E6%8B%92%E7%BB%9D%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">1.1.2 用 catch() 分配拒绝处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-3-%E7%94%A8-finally-%E5%88%86%E9%85%8D%E8%A7%A3%E5%86%B3%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">1.1.3 用 finally() 分配解决处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-4-%E4%B8%BA%E5%B7%B2%E7%A1%AE%E5%AE%9A%E7%9A%84-Promise-%E5%88%86%E9%85%8D%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">1.1.4 为已确定的 Promise 分配处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-5-%E5%A4%84%E7%90%86%E5%99%A8%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1"><span class="nav-text">1.1.5 处理器和微任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-%E5%88%9B%E5%BB%BA%E6%9C%AA%E8%A7%A3%E5%86%B3%E7%9A%84-Promise"><span class="nav-text">1.2 创建未解决的 Promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-%E5%88%9B%E5%BB%BA%E5%B7%B2%E8%A7%A3%E5%86%B3%E7%9A%84-Promise"><span class="nav-text">1.3 创建已解决的 Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-%E4%BD%BF%E7%94%A8-Promise-resolve"><span class="nav-text">1.3.1 使用 Promise.resolve()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-%E4%BD%BF%E7%94%A8-Promise-reject"><span class="nav-text">1.3.2 使用 Promise.reject()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-%E9%9D%9E-Promise-%E7%9A%84-thenable-%E5%AF%B9%E8%B1%A1"><span class="nav-text">1.3.3 非 Promise 的 thenable 对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-%E5%B0%8F%E7%BB%93"><span class="nav-text">1.4 小结</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/libs/anime.min.js"></script>
+
+<!-- local search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/lazyload.min.js"></script>
+
+
+<div class="pjax">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+
+</body>
+</html>

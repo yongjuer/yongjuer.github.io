@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="记录生活，分享技术，分享生活。">
+    <meta name="author" content="小举">
+    
+    <title>
+        
+            useCallback和闭包如何危害你的程序 |
+        
+        小举的阿勒泰
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/brands.min.css">
+    
+        
+            
+                
+<link rel="stylesheet" href="/css/custom.css">
+
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"yongjuer.site","root":"/","language":"zh-CN","path":"search.xml"}
+    KEEP.theme_config = {"base_info":{"primary_color":"rgba(211, 84, 0,1.0)","title":"小举的阿勒泰","author":"小举","avatar":"/images/avatar.png","logo":"/images/avatar.png","favicon":"/images/logo.png"},"menu":{"home":"/ || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags || fa-solid fa-tags","categories":"/categories || fa-solid fa-layer-group","tools":"/tools || fa-solid fa-tools"},"first_screen":{"enable":true,"background_img":"/images/background.jpg","background_img_dark":"/images/background.jpg","description":null,"hitokoto":true},"social_contact":{"enable":false,"links":{"github":null,"weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"created"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":["炼气","筑基","结丹","元婴","化神"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null},"updated_datetime_icon":"fa-solid fa-arrows-rotate","created_datetime_icon":"fa-solid fa-feather"},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":3},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":true},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2021,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":true,"css":[["/css/custom.css"]],"js":[null]},"root":"","source_data":{"tools":[{"category":"聊天 AI","anchorId":"JUU4JTgxJThBJUU1JUE0JUE5JTIwQUk0"},{"name":"ChatGPT","link":"https://chat.openai.com/","description":"OpenAI 旗下 AI 聊天对话工具","image":"/images/tools/chatgpt.svg"},{"name":"Gemini","link":"https://gemini.google.com/app","description":"Google 旗下 AI 聊天对话工具","image":"/images/tools/gemini.svg"},{"name":"Copilot","link":"https://copilot.microsoft.com/","description":"微软旗下的日常 AI 助手","image":"/images/tools/copilot.png"},{"name":"文心一言","link":"https://yiyan.baidu.com/","description":"百度旗下 AI 聊天对话工具","image":"/images/tools/wenxinyiyan.png"},{"name":"通义千问","link":"https://tongyi.aliyun.com/qianwen/","description":"阿里巴巴旗下 AI 聊天对话工具","image":"/images/tools/tongyiqianwen.svg"},{"name":"讯飞星火","link":"https://xinghuo.xfyun.cn/","description":"科大讯飞星火认知 AI 大模型","image":"/images/tools/xinghuo.svg"},{"category":"绘画 AI","anchorId":"JUU3JUJCJTk4JUU3JTk0JUJCJTIwQUk7"},{"name":"Midjourney","link":"https://www.midjourney.com/","description":"AI 图像和插画生成工具","image":"/images/tools/midjourney.png"},{"name":"Adobe Firefly","link":"https://firefly.adobe.com/","description":"Adobe 推出的 AI 图像生成和编辑工具","image":"/images/tools/adobe-firefly.svg"},{"name":"Stable Diffusion","link":"https://stability.ai/","description":"最强开源 AI 绘画工具","image":"/images/tools/stability.png"},{"name":"Microsoft Designer","link":"https://designer.microsoft.com/home","description":"微软推出的在线设计海报和宣传图工具","image":"/images/tools/microsoft-designer.svg"},{"name":"文心一格","link":"https://yige.baidu.com/","description":"百度出品的 AI 绘画工具","image":"/images/tools/wenxinyiyan.png"},{"category":"技术社区","anchorId":"JUU2JThBJTgwJUU2JTlDJUFGJUU3JUE0JUJFJUU1JThDJUJB13"},{"name":"稀土掘金","link":"https://juejin.cn/","description":"一个帮助开发者成长的社区","image":"/images/tools/juejin.svg"},{"name":"V2EX","link":"https://www.v2ex.com/","description":"创意工作者们的社区","image":"/images/tools/v2ex.png"},{"name":"思否","link":"https://segmentfault.com/","description":"中国领先的开发者技术社区","image":"/images/tools/segmentfault.svg"},{"name":"博客园","link":"https://www.cnblogs.com/","description":"开发者的网上家园","image":"/images/tools/cnblogs.png"},{"name":"W2Solo","link":"https://w2solo.com/","description":"中文独立开发者社区","image":null},{"name":"电鸭社区","link":"https://eleduck.com/","description":"专注远程工作招聘交流","image":"/images/tools/dianyashequ.png"},{"name":"StackOverflow","link":"https://stackoverflow.com/","description":"全球最大的技术问答社区","image":"/images/tools/stackoverflow.png"},{"name":"开源中国","link":"https://www.oschina.net/","description":"目前国内最大的开源技术社区","image":"/images/tools/oschina.webp"},{"name":"InfoQ","link":"https://www.infoq.cn/","description":"一个实践驱动的技术社区资讯站点","image":"/images/tools/infoq.png"},{"name":"51CTO","link":"https://www.51cto.com/","description":"中国领先的 IT 技术网站","image":"/images/tools/51cto.webp"},{"name":"CSDN","link":"https://www.csdn.net/","description":"中文最大的技术社区","image":"/images/tools/csdn.png"},{"category":"部署托管","anchorId":"JUU5JTgzJUE4JUU3JUJEJUIyJUU2JTg5JTk4JUU3JUFFJUEx25"},{"name":"GitHub Pages","link":"https://pages.github.com/","description":"通过 GitHub 托管和发布的公共网页","image":"/images/tools/github.svg"},{"name":"Vercel","link":"https://vercel.com/","description":"Vercel's Frontend Cloud provides the developer experience and infrastructure to build, scale, and secure a faster, more personalized web.","image":"/images/tools/vercel.svg"},{"name":"Cloudflare Pages","link":"https://developers.cloudflare.com/pages/","description":"Create full-stack applications that are instantly deployed to the Cloudflare global network.","image":"/images/tools/cloudflare.svg"},{"name":"Netlify","link":"https://www.netlify.com/","description":"Netlify is the essential platform for the delivery of exceptional and dynamic web experiences, without limitations.","image":"/images/tools/netlify.svg"},{"name":"Railway","link":"https://railway.app/","description":"Railway is the cloud for building, shipping, and monitoring applications.","image":"/images/tools/railway.svg"},{"name":"Zeabur","link":"https://zeabur.com","description":"Say goodbye to deployment hassles. With Zeabur, bring your coding genius to life swiftly and smoothly.","image":"/images/tools/zeabur.png"}]},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小举的阿勒泰" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/avatar.png">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               小举的阿勒泰
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tools">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-tools"></i>
+                                
+                                工具
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="menu-text-color fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-home"></i>
+                                </span>
+                            
+                            首页
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-box-archive"></i>
+                                </span>
+                            
+                            归档
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-tags"></i>
+                                </span>
+                            
+                            标签
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-layer-group"></i>
+                                </span>
+                            
+                            分类
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tools">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-tools"></i>
+                                </span>
+                            
+                            工具
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+                <div class="post-content-top border-box"
+                     style="height: 13.8rem"
+                >
+                    <div class="cover-post-title">
+                        useCallback和闭包如何危害你的程序
+                    </div>
+                    <img class="post-cover" src="/images/posts/memory-chain.png"
+                         onerror="this.style.display='none'"
+                    >
+                </div>
+            
+
+            <div class="post-content-bottom border-box has-cover">
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.png">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">小举</span>
+                                
+                                    <span class="author-badge">筑基</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-feather"></i>&nbsp;
+                <span class="datetime">2022-08-01</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-arrows-rotate"></i>&nbsp;
+                    <span class="datetime" data-updated="Mon Jun 17 2024 05:54:12 GMT+0000">2024-06-17</span>
+                </span>
+            
+        
+
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/React/">React</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/performance/">performance</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/memory-leaks/">memory-leaks</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>2.9k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>11 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <p>最近遇到了一个复杂的内存泄漏的问题，它是由 JavaScript 闭包和 React 的 <code>useCallback</code> 钩子的组合引起的。我花了相当长的时间才弄清楚发生了什么，所以我想分享一下我学到的东西。</p>
+<p>我对闭包进行了简短的回顾，但如果您已经熟悉它们在 JavaScript 中的工作原理，请随意跳过这一部分。</p>
+<h2 id="关于闭包的简要回顾"><a href="#关于闭包的简要回顾" class="headerlink" title="关于闭包的简要回顾"></a>关于闭包的简要回顾</h2><p>闭包是 JavaScript 中的一个基本概念。它们允许函数记住创建函数时作用域内的变量。这是一个简单的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">createCounter</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> unused = <span class="number">0</span>; <span class="comment">// 这个变量没有在内部函数中被引用</span></span><br><span class="line">  <span class="keyword">let</span> count = <span class="number">0</span>; <span class="comment">// 这个变量在内部函数被引用了</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">inner</span>(<span class="params"></span>) &#123;</span><br><span class="line">    count++;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(count);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> inner;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> counter = <span class="title function_">createCounter</span>();</span><br><span class="line"><span class="title function_">counter</span>(); <span class="comment">// 1</span></span><br><span class="line"><span class="title function_">counter</span>(); <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p>在此示例中， <code>createCounter</code> 函数返回一个可以访问 <code>count</code> 变量的新函数。这之所以能工作，是因为创建内部函数时， <code>count</code> 变量位于 <code>createCounter</code> 函数的词法作用域内部。</p>
+<p>JavaScript 闭包是使用<strong>上下文对象（context object）</strong>实现的，该对象在函数最初<strong>创建时</strong>保存对作用域内变量的引用。哪些变量保存到上下文对象是 JavaScript 引擎的实现细节，并且需要进行各种优化。例如，在 Chrome 中使用的 JavaScript 引擎 V8 中，未使用的变量可能不会保存到上下文对象中。</p>
+<p>由于闭包可以嵌套在其他闭包内，因此最里面的闭包将保存对它们需要访问的任何外部函数作用域的引用（通过所谓的作用域链）。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">first</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> firstVar = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">second</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 这是引用了 first() 函数内变量的闭包</span></span><br><span class="line">    <span class="keyword">const</span> secondVar = <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">third</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="comment">// 这是引用了 second() 函数 和 first() 函数内变量的闭包</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(firstVar, secondVar);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> third;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">second</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> fn = <span class="title function_">first</span>(); <span class="comment">// 返回 third() 函数</span></span><br><span class="line"><span class="title function_">fn</span>(); <span class="comment">// 1 2</span></span><br></pre></td></tr></table></figure>
+
+<p>在此示例中， <code>third()</code> 函数可以通过作用域链访问 <code>firstVar</code> 变量。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/react-closures-scopes.png"
+                        alt="alt text"
+                 ></p>
+<p>因此，只要应用程序保存对该函数的引用，闭包作用域中的任何变量都不能被垃圾回收收集。由于作用域链，即使是外部函数作用域也将保留在内存中。</p>
+<h2 id="React-和闭包"><a href="#React-和闭包" class="headerlink" title="React 和闭包"></a>React 和闭包</h2><p>对于所有函数式组件、钩子和事件处理程序，我们严重依赖 React 中的闭包。每当我们创建一个从组件范围访问变量（例如 state 或 props）的新函数时，很可能创建了一个闭包。下面是一个例子：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState, useEffect &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params">&#123; id &#125;</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">handleClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 这是一个引用了 App 组件内 count 变量的闭包</span></span><br><span class="line">    <span class="title function_">setCount</span>(count + <span class="number">1</span>);</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(id); <span class="comment">// 这是引用了props中id变量的闭包</span></span><br><span class="line">  &#125;, [id]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span>&gt;</span>Increment<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在大多数情况下，这本身并不是问题。在上面的示例中，<strong>App 的每次渲染都会重新创建新的闭包</strong>，并且旧的闭包将被垃圾收集。这可能意味着一些不必要的分配和释放，但仅仅这些分配和释放通常非常快。</p>
+<p>但是，当我们的应用程序不断增长并且开始使用 <code>useMemo</code> 和 <code>useCallback</code> 等缓存技术来避免不必要的重新渲染时，有些事情需要特别的注意。</p>
+<h2 id="useCallback-和闭包"><a href="#useCallback-和闭包" class="headerlink" title="useCallback 和闭包"></a>useCallback 和闭包</h2><p>通过记忆缓存钩子，我们可以用更好的渲染性能来换取更多的内存使用。只要依赖关系不改变， <code>useCallback</code> 将保存对函数的引用。让我们看一个例子：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState, useCallback &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> handleEvent = <span class="title function_">useCallback</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="title function_">setCount</span>(count + <span class="number">1</span>);</span><br><span class="line">  &#125;, [count]);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;count&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">ExpensiveComponent</span> <span class="attr">onEvent</span>=<span class="string">&#123;handleEvent&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在此示例中，我们希望避免重新渲染 <code>ExpensiveChildComponent</code>。我们可以通过尝试保持 <code>handleEvent()</code> 函数引用稳定来做到这一点。我们使用 <code>useCallback</code> 将 <code>handleEvent()</code>进行记忆，以便仅在 <code>count</code> 状态更改时重新创建新的函数。然后，我们可以将 <code>ExpensiveChildComponent</code> 包装在 <code>React.memo()</code> 中，以避免在父级 <code>App</code> 渲染时重新渲染。到目前为止，一切都很好。</p>
+<p>但让我们对这个例子进行一些修改：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState, useCallback &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BigObject</span> &#123;</span><br><span class="line">    public readonly data = <span class="keyword">new</span> <span class="title class_">Unit8Array</span>(<span class="number">1024</span> * <span class="number">1024</span> * <span class="number">10</span>); <span class="comment">// 10MB大小的数据</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> [count, setCount] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> bigData = <span class="keyword">new</span> <span class="title class_">BigObject</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> handleEvent = <span class="title function_">useCallback</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">setCount</span>(count + <span class="number">1</span>);</span><br><span class="line">    &#125;, [count]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">handleClick</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(bigData.<span class="property">data</span>.<span class="property">length</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClick&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">ExpensiveChildComponent2</span> <span class="attr">onMyEvent</span>=<span class="string">&#123;handleEvent&#125;</span> /&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你觉得会发生什么事情？</p>
+<p>由于 <code>handleEvent()</code> 创建了一个引用 <code>App</code> 函数内 <code>count</code> 变量的闭包，因此它将<strong>保存对组件上下文对象的引用</strong>。而且，即使我—们<strong>从未在</strong> <code>handleEvent()</code> 函数中访问 <code>bigData</code> ， <code>handleEvent()</code> 仍将通过组件的上下文对象保存对 <code>bigData</code> 的引用。</p>
+<p>所有闭包从创建之日起就<strong>共享一个公共上下文对象</strong>。由于 <code>handleClick()</code> 内部引用了 <code>bigData</code> ，因此 <code>bigData</code> 将由此上下文对象引用。这意味着，只要 <code>handleEvent()</code> 被引用， <code>bigData</code> 就永远不会被垃圾回收。此引用将一直保留，直到 <code>count</code> 更改并重新创建 <code>handleEvent()</code> 为止。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/react-closures-bigObjectCapture.png"
+                        alt="alt text"
+                 ></p>
+<h2 id="useCallback-闭包-大数据对象-内存泄漏"><a href="#useCallback-闭包-大数据对象-内存泄漏" class="headerlink" title="useCallback + 闭包 + 大数据对象 &#x3D; 内存泄漏"></a>useCallback + 闭包 + 大数据对象 &#x3D; 内存泄漏</h2><p>让我们看一下最后一个例子，它将上述所有内容发挥到了极致。这个例子是我在我们的应用程序中遇到的简化版本。因此，虽然这个例子看起来有些做作，但它很好地说明了一般问题。</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useState, useCallback &#125; <span class="keyword">from</span> <span class="string">&quot;react&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BigObject</span> &#123;</span><br><span class="line">    public readonly data = <span class="keyword">new</span> <span class="title class_">Unit8Array</span>(<span class="number">1024</span> * <span class="number">1024</span> * <span class="number">10</span>); <span class="comment">// 10MB大小的数据</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">App</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> [countA, setCountA] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> [countB, setCountB] = <span class="title function_">useState</span>(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">const</span> bigData = <span class="keyword">new</span> <span class="title class_">BigObject</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> handleClickA = <span class="title function_">useCallback</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">setCountA</span>(countA + <span class="number">1</span>);</span><br><span class="line">    &#125;, [countA]);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> handleClickB = <span class="title function_">useCallback</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="title function_">setCountB</span>(countB + <span class="number">1</span>);</span><br><span class="line">    &#125;, [countB]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">handleClickBoth</span> = (<span class="params"></span>) =&gt; &#123;</span><br><span class="line">        <span class="title function_">handleClickA</span>();</span><br><span class="line">        <span class="title function_">handlClickB</span>();</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(bigData.<span class="property">data</span>.<span class="property">length</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        <span class="language-xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClickA&#125;</span>&gt;</span>Increment A<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClickB&#125;</span>&gt;</span>Increment B<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;handleClickBoth&#125;</span>&gt;</span>Increment Both<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;<span class="name">p</span>&gt;</span>A: &#123;countA&#125;, B: &#123;countB&#125; <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">    )</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在此示例中，我们有两个使用 <code>useCallback</code> 进行缓存处理的事件处理程序 <code>handleClickA()</code> 和 <code>handleClickB()</code> 。我们还有一个函数 <code>handleClickBoth()</code> ，它调用两个事件处理程序并打印 bigData 的长度。</p>
+<p><strong>你能猜出当我们交替单击 Increment A 和 Increment B 按钮时会发生什么吗？</strong></p>
+<p>让我们看看点击每个按钮 5 次后 Chrome DevTools 中的内存配置文件：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/bigobject-leak-useCallback.png"
+                        alt="alt text"
+                 ></p>
+<p>似乎 <code>bigData</code> 永远不会被垃圾收集。内存使用量随着每次点击而不断增加。在我们的例子中，应用程序保存对 11 个 <code>BigObject</code> 实例的引用，每个实例大小为 10MB。一个用于初始渲染，一个用于每次单击。</p>
+<ol start="0">
+<li><strong>第一次渲染：</strong></li>
+</ol>
+<p>当 <code>App</code> 第一次渲染时，它会创建一个闭包函数作用域，其中包含对所有变量的引用，因为我们在至少一个闭包中使用了所有变量。这包括 <code>bigData</code> 、 <code>handleClickA()</code> 和 <code>handleClickB()</code> 。我们在 <code>handleClickBoth()</code> 中引用它们。我们将闭包范围称为 <code>AppScope#0</code> 。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/closure-chain-0.png"
+                        alt="alt text"
+                 ></p>
+<ol>
+<li><strong>单击 <code>Increment A</code> 按钮：</strong></li>
+</ol>
+<ul>
+<li>第一次点击 <code>Increment A</code> 将导致 <code>handleClickA()</code> 被重新创建，因为我们更改了 <code>countA</code> :让我们将创建的函数称为 <code>handleClickA()#1</code>;</li>
+<li><code>handleClickB()#0</code> 不会被重新创建，因为 <code>countB</code> 没有改变; 然而，这意味着 <code>handleClickB()#0</code> 仍将保留对先前 <code>AppScope#0</code> 的引用。</li>
+<li>新的 <code>handleClickA()#1</code> 将保存对 <code>AppScope#1</code> 的引用，而 <code>AppScope#1</code> 则保存对 <code>handleClickB()#0</code> 的引用。</li>
+</ul>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/closure-chain-1.png"
+                        alt="alt text"
+                 ></p>
+<ol start="2">
+<li><strong>单击 <code>Increment B</code> 按钮：</strong></li>
+</ol>
+<ul>
+<li><p>第一次点击 <code>Increment B</code> 将导致 <code>handleClickB()</code> 被重新创建，因为我们更改了 <code>countB</code> ，从而创建了 <code>handleClickB()#1</code> 。</p>
+</li>
+<li><p>此时 React 不会重新创建 <code>handleClickA()</code> ，因为 <code>countA</code> 没有改变。</p>
+</li>
+<li><p>因此， <code>handleClickB()#1</code> 将保存对 <code>AppScope#2</code> 的引用，<code>AppScope#2</code> 保存着对 <code>handleClickA()#1</code> 的引用，同时<code>handleClickA()#1</code>保存着对<code>AppScope#1</code> 的引用，<code>AppScope#1</code> 保存着对<code>handleClickB()#0</code> 的引用 。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/closure-chain-2.png"
+                        alt="alt text"
+                 ></p>
+</li>
+</ul>
+<ol start="3">
+<li><strong>第二次单击“Increment A”按钮：</strong><br>这样，我们可以创建一个无限的闭包链，这些闭包相互引用并且永远不会被垃圾收集，同时拖着一个单独的 10MB <strong>bigData</strong> 对象，因为它会在每次渲染时重新创建。</li>
+</ol>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/closure-chain.png"
+                        alt="alt text"
+                 ></p>
+<p>问题是单个组件中的不同 <code>useCallback</code> 钩子可能会通过闭包作用域相互引用或者引用一些其他昂贵的数据。然后，闭包将保存在内存中，直到重新创建 <code>useCallback</code> 钩子。组件中拥有多个 <code>useCallback</code> 钩子会使我们很难推断内存中保存的内容以及何时释放它。组件内的回调函数越多，遇到此问题的可能性就越大。</p>
+<p><strong>这会是个问题吗？</strong></p>
+<p>以下一些因素将使您更有可能遇到此问题：</p>
+<ol>
+<li>程序内存在一些几乎从未重新渲染的大型组件，例如，某个你将大量组件状态数据提升到的应用程序外壳组件。</li>
+<li>大量依靠 <code>useCallback</code> 来最大限度地减少组件重新渲染。</li>
+<li>在使用 <code>useCallback</code> 进行过缓存的函数内部调用了其他函数。</li>
+<li>处理大型对象，例如图像数据或大型数组。</li>
+</ol>
+<p>如果你不需要处理任何大型对象，引用几个额外的字符串或数字可能不是问题。大多数这些闭包交叉引用将在足够的属性更改后被自动清除。不过，你的应用程序可能会占用比您预期更多的内存。</p>
+<h2 id="如何避免闭包和-useCallback-造成内存泄漏？"><a href="#如何避免闭包和-useCallback-造成内存泄漏？" class="headerlink" title="如何避免闭包和 useCallback 造成内存泄漏？"></a>如何避免闭包和 useCallback 造成内存泄漏？</h2><p>一些避免此类问题的建议：</p>
+<ul>
+<li><strong>Tip1： 使闭包作用域尽可能小。</strong><br>JavaScript 使得发现所有被捕获的变量变得非常困难。避免保留太多变量的最佳方法是减少闭包周围的函数大小。这意味着：<ol>
+<li>编写更小的组件，这将减少创建新闭包时范围内的变量数量。</li>
+<li>编写自定义钩子，因为这样任何回调都只能关联在钩子函数的范围内。</li>
+</ol>
+</li>
+<li><strong>Tip2： 避免捕获其他闭包，尤其是已经缓存的闭包。</strong><br>尽管这看起来很明显，但 React 很容易陷入这个陷阱。如果编写相互调用的较小函数，那么一旦添加第一个 <code>useCallback</code> ，就会出现<strong>要记住的组件范围内所有被调用函数</strong>这样的连锁反应。</li>
+<li><strong>Tip3： 只要在非常必要的时候在考虑使用 React 的缓存技术</strong><br><code>useCallback</code> 和 <code>useMemo</code> 是避免不必要的重新渲染的好工具，但它们是有代价的。仅当您发现渲染导致的性能问题时才使用它们。</li>
+<li><strong>Tip4（脱围机制）： 对于大型对象使用 <code>useRef</code></strong><br>这可能意味着，您需要自己处理对象的生命周期并正确清理它。虽然不是最优的，但比泄漏内存要好。</li>
+</ul>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>闭包是 React 中广泛使用的模式。它们允许我们的函数记住组件上次渲染时范围内的 props 和 state 。当与 useCallback 等记忆技术结合使用时，这可能会导致意外的内存泄漏，尤其是在处理大型对象时。为了避免这些内存泄漏，请保持闭包范围尽可能小，在不必要时避免缓存记忆，对于大数据对象可能需要使用 useRef 。</p>
+<p>希望这篇文章能在你使用 React 时帮助你进行更深入的思考。</p>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/React/">React</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/performance/">performance</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/memory-leaks/">memory-leaks</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2023/03/20/flex/"
+                                   title="细说 Flex 布局"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">细说 Flex 布局</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2022/04/24/promise/series-04/"
+                                   title="全面理解 Promise 系列（四)：异步函数和 await 表达式"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">全面理解 Promise 系列（四)：异步函数和 await 表达式</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E9%97%AD%E5%8C%85%E7%9A%84%E7%AE%80%E8%A6%81%E5%9B%9E%E9%A1%BE"><span class="nav-text">关于闭包的简要回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-%E5%92%8C%E9%97%AD%E5%8C%85"><span class="nav-text">React 和闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useCallback-%E5%92%8C%E9%97%AD%E5%8C%85"><span class="nav-text">useCallback 和闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useCallback-%E9%97%AD%E5%8C%85-%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1-%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-text">useCallback + 闭包 + 大数据对象 &#x3D; 内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E9%97%AD%E5%8C%85%E5%92%8C-useCallback-%E9%80%A0%E6%88%90%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%EF%BC%9F"><span class="nav-text">如何避免闭包和 useCallback 造成内存泄漏？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">小举</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E9%97%AD%E5%8C%85%E7%9A%84%E7%AE%80%E8%A6%81%E5%9B%9E%E9%A1%BE"><span class="nav-text">关于闭包的简要回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React-%E5%92%8C%E9%97%AD%E5%8C%85"><span class="nav-text">React 和闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useCallback-%E5%92%8C%E9%97%AD%E5%8C%85"><span class="nav-text">useCallback 和闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#useCallback-%E9%97%AD%E5%8C%85-%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%AF%B9%E8%B1%A1-%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="nav-text">useCallback + 闭包 + 大数据对象 &#x3D; 内存泄漏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E9%97%AD%E5%8C%85%E5%92%8C-useCallback-%E9%80%A0%E6%88%90%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%EF%BC%9F"><span class="nav-text">如何避免闭包和 useCallback 造成内存泄漏？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-text">结论</span></a></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/libs/anime.min.js"></script>
+
+<!-- local search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/lazyload.min.js"></script>
+
+
+<div class="pjax">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+
+</body>
+</html>

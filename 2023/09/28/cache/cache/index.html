@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="记录生活，分享技术，分享生活。">
+    <meta name="author" content="小举">
+    
+    <title>
+        
+            一次线上白屏事故排查引发的前端静态资源缓存的思考 |
+        
+        小举的阿勒泰
+    </title>
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    
+        <link rel="shortcut icon" href="/images/logo.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/regular.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/solid.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/font/css/brands.min.css">
+    
+        
+            
+                
+<link rel="stylesheet" href="/css/custom.css">
+
+            
+        
+    
+    <script class="keep-theme-configurations">
+    const KEEP = window.KEEP || {}
+    KEEP.hexo_config = {"hostname":"yongjuer.site","root":"/","language":"zh-CN","path":"search.xml"}
+    KEEP.theme_config = {"base_info":{"primary_color":"rgba(211, 84, 0,1.0)","title":"小举的阿勒泰","author":"小举","avatar":"/images/avatar.png","logo":"/images/avatar.png","favicon":"/images/logo.png"},"menu":{"home":"/ || fa-solid fa-home","archives":"/archives || fa-solid fa-box-archive","tags":"/tags || fa-solid fa-tags","categories":"/categories || fa-solid fa-layer-group","tools":"/tools || fa-solid fa-tools"},"first_screen":{"enable":true,"background_img":"/images/background.jpg","background_img_dark":"/images/background.jpg","description":null,"hitokoto":true},"social_contact":{"enable":false,"links":{"github":null,"weixin":null,"qq":null,"weibo":null,"zhihu":null,"twitter":null,"x":null,"facebook":null,"email":null}},"scroll":{"progress_bar":false,"percent":true,"hide_header":true},"home":{"announcement":null,"category":true,"tag":true,"post_datetime":"created"},"post":{"author_badge":{"enable":true,"level_badge":false,"custom_badge":["炼气","筑基","结丹","元婴","化神"]},"word_count":{"wordcount":true,"min2read":true},"datetime_format":"YYYY-MM-DD","copyright_info":true,"share":true,"reward":{"enable":false,"img_link":null,"text":null},"updated_datetime_icon":"fa-solid fa-arrows-rotate","created_datetime_icon":"fa-solid fa-feather"},"code_block":{"tools":{"enable":true,"style":"default"},"highlight_theme":"default"},"toc":{"enable":true,"number":false,"expand_all":true,"init_open":true,"layout":"right"},"website_count":{"busuanzi_count":{"enable":false,"site_uv":false,"site_pv":false,"page_pv":false}},"local_search":{"enable":true,"preload":true},"comment":{"enable":false,"use":"valine","valine":{"appid":null,"appkey":null,"server_urls":null,"placeholder":null},"gitalk":{"github_id":null,"github_admins":null,"repository":null,"client_id":null,"client_secret":null,"proxy":null},"twikoo":{"env_id":null,"region":null,"version":"1.6.21"},"waline":{"server_url":null,"reaction":false,"version":3},"giscus":{"repo":null,"repo_id":null,"category":"Announcements","category_id":null,"reactions_enabled":false},"artalk":{"server":null},"disqus":{"shortname":null}},"rss":{"enable":true},"lazyload":{"enable":true},"cdn":{"enable":true,"provider":"cdnjs"},"pjax":{"enable":true},"footer":{"since":2021,"word_count":false,"site_deploy":{"enable":false,"provider":"github","url":null},"record":{"enable":false,"list":[{"code":null,"link":null}]}},"inject":{"enable":true,"css":[["/css/custom.css"]],"js":[null]},"root":"","source_data":{"tools":[{"category":"聊天 AI","anchorId":"JUU4JTgxJThBJUU1JUE0JUE5JTIwQUk0"},{"name":"ChatGPT","link":"https://chat.openai.com/","description":"OpenAI 旗下 AI 聊天对话工具","image":"/images/tools/chatgpt.svg"},{"name":"Gemini","link":"https://gemini.google.com/app","description":"Google 旗下 AI 聊天对话工具","image":"/images/tools/gemini.svg"},{"name":"Copilot","link":"https://copilot.microsoft.com/","description":"微软旗下的日常 AI 助手","image":"/images/tools/copilot.png"},{"name":"文心一言","link":"https://yiyan.baidu.com/","description":"百度旗下 AI 聊天对话工具","image":"/images/tools/wenxinyiyan.png"},{"name":"通义千问","link":"https://tongyi.aliyun.com/qianwen/","description":"阿里巴巴旗下 AI 聊天对话工具","image":"/images/tools/tongyiqianwen.svg"},{"name":"讯飞星火","link":"https://xinghuo.xfyun.cn/","description":"科大讯飞星火认知 AI 大模型","image":"/images/tools/xinghuo.svg"},{"category":"绘画 AI","anchorId":"JUU3JUJCJTk4JUU3JTk0JUJCJTIwQUk7"},{"name":"Midjourney","link":"https://www.midjourney.com/","description":"AI 图像和插画生成工具","image":"/images/tools/midjourney.png"},{"name":"Adobe Firefly","link":"https://firefly.adobe.com/","description":"Adobe 推出的 AI 图像生成和编辑工具","image":"/images/tools/adobe-firefly.svg"},{"name":"Stable Diffusion","link":"https://stability.ai/","description":"最强开源 AI 绘画工具","image":"/images/tools/stability.png"},{"name":"Microsoft Designer","link":"https://designer.microsoft.com/home","description":"微软推出的在线设计海报和宣传图工具","image":"/images/tools/microsoft-designer.svg"},{"name":"文心一格","link":"https://yige.baidu.com/","description":"百度出品的 AI 绘画工具","image":"/images/tools/wenxinyiyan.png"},{"category":"技术社区","anchorId":"JUU2JThBJTgwJUU2JTlDJUFGJUU3JUE0JUJFJUU1JThDJUJB13"},{"name":"稀土掘金","link":"https://juejin.cn/","description":"一个帮助开发者成长的社区","image":"/images/tools/juejin.svg"},{"name":"V2EX","link":"https://www.v2ex.com/","description":"创意工作者们的社区","image":"/images/tools/v2ex.png"},{"name":"思否","link":"https://segmentfault.com/","description":"中国领先的开发者技术社区","image":"/images/tools/segmentfault.svg"},{"name":"博客园","link":"https://www.cnblogs.com/","description":"开发者的网上家园","image":"/images/tools/cnblogs.png"},{"name":"W2Solo","link":"https://w2solo.com/","description":"中文独立开发者社区","image":null},{"name":"电鸭社区","link":"https://eleduck.com/","description":"专注远程工作招聘交流","image":"/images/tools/dianyashequ.png"},{"name":"StackOverflow","link":"https://stackoverflow.com/","description":"全球最大的技术问答社区","image":"/images/tools/stackoverflow.png"},{"name":"开源中国","link":"https://www.oschina.net/","description":"目前国内最大的开源技术社区","image":"/images/tools/oschina.webp"},{"name":"InfoQ","link":"https://www.infoq.cn/","description":"一个实践驱动的技术社区资讯站点","image":"/images/tools/infoq.png"},{"name":"51CTO","link":"https://www.51cto.com/","description":"中国领先的 IT 技术网站","image":"/images/tools/51cto.webp"},{"name":"CSDN","link":"https://www.csdn.net/","description":"中文最大的技术社区","image":"/images/tools/csdn.png"},{"category":"部署托管","anchorId":"JUU5JTgzJUE4JUU3JUJEJUIyJUU2JTg5JTk4JUU3JUFFJUEx25"},{"name":"GitHub Pages","link":"https://pages.github.com/","description":"通过 GitHub 托管和发布的公共网页","image":"/images/tools/github.svg"},{"name":"Vercel","link":"https://vercel.com/","description":"Vercel's Frontend Cloud provides the developer experience and infrastructure to build, scale, and secure a faster, more personalized web.","image":"/images/tools/vercel.svg"},{"name":"Cloudflare Pages","link":"https://developers.cloudflare.com/pages/","description":"Create full-stack applications that are instantly deployed to the Cloudflare global network.","image":"/images/tools/cloudflare.svg"},{"name":"Netlify","link":"https://www.netlify.com/","description":"Netlify is the essential platform for the delivery of exceptional and dynamic web experiences, without limitations.","image":"/images/tools/netlify.svg"},{"name":"Railway","link":"https://railway.app/","description":"Railway is the cloud for building, shipping, and monitoring applications.","image":"/images/tools/railway.svg"},{"name":"Zeabur","link":"https://zeabur.com","description":"Say goodbye to deployment hassles. With Zeabur, bring your coding genius to life swiftly and smoothly.","image":"/images/tools/zeabur.png"}]},"version":"4.2.5"}
+    KEEP.language_ago = {"second":"%s 秒前","minute":"%s 分钟前","hour":"%s 小时前","day":"%s 天前","week":"%s 周前","month":"%s 个月前","year":"%s 年前"}
+    KEEP.language_code_block = {"copy":"复制代码","copied":"已复制","fold":"折叠代码块","folded":"已折叠"}
+    KEEP.language_copy_copyright = {"copy":"复制版权信息","copied":"已复制","title":"原文标题","author":"原文作者","link":"原文链接"}
+  </script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="小举的阿勒泰" type="application/atom+xml">
+</head>
+
+
+<body>
+<div class="progress-bar-container">
+    
+
+    
+        <span class="pjax-progress-bar"></span>
+        <i class="pjax-progress-icon fas fa-circle-notch fa-spin"></i>
+    
+</div>
+
+
+
+<main class="page-container border-box">
+    <!-- home first screen  -->
+    
+
+    <!-- page content -->
+    <div class="page-main-content border-box">
+        <div class="page-main-content-top">
+            
+<header class="header-wrapper">
+
+    <div class="border-box header-content">
+        <div class="left flex-start border-box">
+            
+                <a class="logo-image border-box" href="/">
+                    <img src="/images/avatar.png">
+                </a>
+            
+            <a class="site-name border-box" href="/">
+               小举的阿勒泰
+            </a>
+        </div>
+
+        <div class="right border-box">
+            <div class="pc border-box">
+                <ul class="menu-list border-box">
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-home"></i>
+                                
+                                首页
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/archives">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-box-archive"></i>
+                                
+                                归档
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tags">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-tags"></i>
+                                
+                                标签
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/categories">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-layer-group"></i>
+                                
+                                分类
+                                
+                            </a>
+                            
+                        </li>
+                    
+                        
+                        <li class="menu-item flex-start border-box">
+                            <a class="menu-text-color border-box" href="/tools">
+                                
+                                    <i class="menu-text-color menu-icon fa-solid fa-tools"></i>
+                                
+                                工具
+                                
+                            </a>
+                            
+                        </li>
+                    
+                    
+                        <li class="menu-item search search-popup-trigger">
+                            <i class="menu-text-color fas search fa-search"></i>
+                        </li>
+                    
+                </ul>
+            </div>
+            <div class="mobile border-box flex-start">
+                
+                    <div class="icon-item search search-popup-trigger"><i class="fas fa-search"></i></div>
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list border-box">
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-home"></i>
+                                </span>
+                            
+                            首页
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/archives">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-box-archive"></i>
+                                </span>
+                            
+                            归档
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tags">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-tags"></i>
+                                </span>
+                            
+                            标签
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/categories">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-layer-group"></i>
+                                </span>
+                            
+                            分类
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+                
+                <li class="drawer-menu-item border-box not-sub-menu">
+                    <label class="drawer-menu-label border-box">
+                        <a class="drawer-menu-text-color left-side flex-start border-box" href="/tools">
+                            
+                                <span class="menu-icon-wrap border-box flex-center">
+                                    <i class="drawer-menu-text-color menu-icon fa-solid fa-tools"></i>
+                                </span>
+                            
+                            工具
+                        </a>
+                        
+                    </label>
+                    
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
+</header>
+
+
+        </div>
+
+        <div class="page-main-content-middle border-box">
+
+            <div class="main-content border-box">
+                
+
+                    
+<div class="fade-in-down-animation">
+    <div class="post-page-container border-box">
+        <div class="post-content-container border-box">
+            
+                <div class="post-content-top border-box"
+                     style="height: 260px"
+                >
+                    <div class="cover-post-title">
+                        一次线上白屏事故排查引发的前端静态资源缓存的思考
+                    </div>
+                    <img class="post-cover" src="/images/posts/cache/cache-cover.png"
+                         onerror="this.style.display='none'"
+                    >
+                </div>
+            
+
+            <div class="post-content-bottom border-box has-cover">
+                
+
+                
+                    <div class="post-header border-box">
+                        
+                            <div class="avatar-box border-box">
+                                <img src="/images/avatar.png">
+                            </div>
+                        
+                        <div class="info-box">
+                            <div class="author border-box">
+                                <span class="name">小举</span>
+                                
+                                    <span class="author-badge">筑基</span>
+                                
+                            </div>
+                            <div class="meta-info border-box">
+                                
+
+<div class="post-meta-info-container border-box post">
+    <div class="post-meta-info border-box">
+        
+
+        
+            <span class="meta-info-item post-create-date">
+                <i class="icon fa-solid fa-feather"></i>&nbsp;
+                <span class="datetime">2023-09-28</span>
+            </span>
+
+            
+                <span class="meta-info-item post-update-date">
+                    <i class="icon fa-solid fa-arrows-rotate"></i>&nbsp;
+                    <span class="datetime" data-updated="Fri Nov 15 2024 15:52:39 GMT+0000">2024-11-15</span>
+                </span>
+            
+        
+
+        
+
+        
+            <span class="post-tag meta-info-item border-box">
+                <ul class="post-tag-ul">
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/performance/">performance</a></li>
+                        
+                    
+                            <li class="tag-item"><span class="tag-separator"><i class="icon fas fa-hashtag"></i></span><a href="/tags/cache/">cache</a></li>
+                        
+                    
+                </ul>
+            </span>
+        
+
+        
+        
+            <span class="meta-info-item post-wordcount">
+                <i class="icon fas fa-file-word"></i>&nbsp;<span>5.2k 字</span>
+            </span>
+        
+        
+            <span class="meta-info-item post-min2read">
+                <i class="icon fas fa-clock"></i>&nbsp;<span>19 分钟</span>
+            </span>
+        
+        
+    </div>
+
+    
+</div>
+
+                            </div>
+                        </div>
+                    </div>
+                
+
+                <div class="post-content keep-markdown-body ">
+                    
+
+                    
+                         <h2 id="1-背景"><a href="#1-背景" class="headerlink" title="1. 背景"></a>1. 背景</h2><p>最近遇到了一个线上白屏的故障，客户反映网站白屏，没有 Loading 状态，也没有任何可以交互的 UI。尝试使用无痕模式可以正常打开网页。这个情况在客户的电脑上偶尔出现，复现概率并不高，奇怪的是我们自己的电脑尝试了很多次并没有出现这个问题。好在我们让客户再次遇到这个问题的时候打开控制台并保存了控制台的截图，发现其中有两个 js 脚本文件（invisible.js 和 rocket-loader.min.js）加载失败，并且有一个 rum 接口出现 404 错误。</p>
+<p>于是我们赶到客户现场排查，但是经过一顿捣鼓后并没有什么新的发现。但是注意到浏览器控制台没有启用 <code>Disable Cache</code> 选项，于是我们尝试启用该选项，发现白屏问题消失了。访问恢复正常，上述的 404 报错不仅没有报错，连对资源本身的请求也消失了。于是我们尝试从那些 404 的请求身上入手，探究本次事故发生的原因及解决方案。</p>
+<p>以下是理解本次事故原因所需要了解的基本前提：</p>
+<h3 id="1-1-公司项目的系统架构："><a href="#1-1-公司项目的系统架构：" class="headerlink" title="1.1 公司项目的系统架构："></a>1.1 公司项目的系统架构：</h3><ul>
+<li>服务器：使用亚马逊 AWS，部署在东京。其中部署了 nginx 作为 web server 以及负责请求匹配和流量转发。</li>
+<li>CDN 服务:国内访问走的是 aliyun、国外访问走的是 cloudflare 的两套方案。经过层层转发后，最终都会到达东京的 AWS 服务器。</li>
+</ul>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-framework.png"
+                        alt="alt text"
+                 ></p>
+<p>使用<a class="link"   target="_blank" rel="noopener" href="https://www.cloudflare.com/zh-cn/learning/cdn/what-is-a-cdn/" >CDN<i class="fas fa-external-link-alt"></i></a>服务的原因主要在于以下几点:</p>
+<ul>
+<li>缩短网站加载时间</li>
+<li>减少带宽成本</li>
+<li>增加内容可用性和减少冗余</li>
+<li>提高网站的安全性</li>
+</ul>
+<p>除此之外，现在的云服务器还会提供一些附加功能，比如<strong>性能优化、网站监控和分析</strong>，并且部分功能会通过<strong>在网站的 html 中插入 js 脚本的方式实现</strong>。其中，cloudflare 会通过插入 beacon.min.js 实现网站监控和分析，并通过 <a class="link"   target="_blank" rel="noopener" href="https://developers.cloudflare.com/analytics/web-analytics/" >rum<i class="fas fa-external-link-alt"></i></a> 接口上报数据；通过插入 rocket-loader.min.js 实现<a class="link"   target="_blank" rel="noopener" href="https://developers.cloudflare.com/speed/optimization/content/rocket-loader/" >性能优化<i class="fas fa-external-link-alt"></i></a>。</p>
+<h3 id="1-2-浏览器的缓存机制："><a href="#1-2-浏览器的缓存机制：" class="headerlink" title="1.2 浏览器的缓存机制："></a>1.2 浏览器的缓存机制：</h3><p><a class="link"   target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching" >浏览器缓存机制<i class="fas fa-external-link-alt"></i></a>分为两种：</p>
+<h4 id="1-2-1-强缓存："><a href="#1-2-1-强缓存：" class="headerlink" title="1.2.1 强缓存："></a>1.2.1 强缓存：</h4><p>浏览器的强缓存机制是指在不向服务器发送请求的情况下，直接从浏览器的缓存中读取资源。这种机制能够显著提升页面加载速度，减少网络请求，降低服务器压力。强缓存主要依赖于 HTTP 头中的<code>Expires</code> 和<code>Cache-Control</code>来实现。</p>
+<ol>
+<li><code>Expires</code> 是 HTTP&#x2F;1.0 中定义的字段，用于指定资源的过期时间，即在该时间之前，浏览器可以直接使用缓存中的资源，而不需要再次向服务器发送请求。</li>
+</ol>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Expires</span><span class="punctuation">: </span>Wed, 21 Oct 2024 07:28:00 GMT</span><br></pre></td></tr></table></figure>
+
+<p>上述示例表示资源在 2024 年 10 月 21 日 07:28:00 之前有效，浏览器在此之前会直接从缓存中获取资源。</p>
+<ol start="2">
+<li><code>Cache-Control</code> 是 HTTP&#x2F;1.1 中定义的字段，提供了比 Expires 更灵活和强大的缓存控制功能。常见的取值包括：</li>
+</ol>
+<ul>
+<li><code>max-age=&lt;seconds&gt;</code>：指定资源在缓存中的有效时间（以秒为单位）。</li>
+<li><code>no-cache</code>：强制每次请求直接发送到服务器进行验证（并不是真的不缓存）。</li>
+<li><code>no-store</code>：不缓存任何内容，每次请求都从服务器获取。</li>
+<li><code>public</code>：表示响应可以被任何缓存（如浏览器、CDN 等）缓存。</li>
+<li><code>private</code>：表示响应只能被单个用户缓存，不能被共享缓存（如 CDN）缓存。</li>
+</ul>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Cache-Control</span><span class="punctuation">: </span>max-age=3600, public</span><br></pre></td></tr></table></figure>
+
+<p>上述示例表示资源在缓存中最长有效时间为 3600 秒，可以被任何缓存缓存。</p>
+<p><strong>强缓存机制的工作流程</strong></p>
+<ol>
+<li>初次请求：</li>
+</ol>
+<ul>
+<li>浏览器向服务器请求资源。</li>
+<li>服务器返回资源，同时返回 <code>Expires</code> 或 <code>Cache-Control</code> 头部信息。</li>
+<li>浏览器将资源和相关的头部信息存储在缓存中。</li>
+</ul>
+<ol start="2">
+<li>再次请求：</li>
+</ol>
+<ul>
+<li>浏览器检查缓存中的资源是否仍然有效（依据 <code>Expires</code> 和<code>Cache-Control</code>）。</li>
+<li>如果有效，直接从缓存中读取资源，不向服务器发送请求。</li>
+<li>如果无效，发送请求到服务器，服务器返回新的资源和更新的缓存控制头部。</li>
+</ul>
+<p>示例:假设我们有一个静态资源 example.js，服务器返回的响应头如下：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">HTTP/1.1</span> <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Cache-Control</span><span class="punctuation">: </span>max-age=600</span><br></pre></td></tr></table></figure>
+
+<p>这表示 example.js 在缓存中有效期为 600 秒（10 分钟）。在此期间，浏览器再次请求该资源时，会直接从缓存中读取，而不需要发送请求到服务器。</p>
+<p><strong>强缓存的优缺点</strong></p>
+<ol>
+<li>优点：</li>
+</ol>
+<ul>
+<li><strong>提升性能</strong>：减少网络请求，显著加快页面加载速度。</li>
+<li><strong>减轻服务器压力</strong>：减少服务器的负载和带宽消耗。</li>
+</ul>
+<ol start="2">
+<li>缺点：</li>
+</ol>
+<ul>
+<li><strong>内容更新延迟</strong>：如果服务器上的资源更新了，但在缓存有效期内，用户仍会看到旧的资源。可以通过设置合理的缓存时间和使用版本号（如文件名中加入 hash 值）来解决此问题。</li>
+</ul>
+<h4 id="1-2-2-协商缓存："><a href="#1-2-2-协商缓存：" class="headerlink" title="1.2.2 协商缓存："></a>1.2.2 协商缓存：</h4><p>浏览器的协商缓存机制（又称为条件缓存机制）是一种<strong>在资源过期后</strong>，通过与服务器进行通信来确认资源是否更新的缓存机制。协商缓存机制可以有效减少不必要的资源传输，提高页面加载速度，同时确保用户获取最新的资源。</p>
+<p>协商缓存主要通过以下两个 HTTP 头部来实现：<code>Last-Modified/If-Modified-Since</code> 和 <code>ETag/If-None-Match</code>。</p>
+<ol>
+<li><code>Last-Modified/If-Modified-Since</code>：</li>
+</ol>
+<ul>
+<li><code>Last-Modified</code>：<strong>服务器在响应中</strong>包含的头部字段，表示资源的最后修改时间。</li>
+<li><code>If-Modified-Since</code>：<strong>浏览器在请求中</strong>包含的头部字段，表示上次请求时获取的 Last-Modified 时间。</li>
+</ul>
+<ol start="2">
+<li><code>ETag/If-None-Match</code>：</li>
+</ol>
+<ul>
+<li><code>ETag</code>：<strong>服务器在响应中</strong>包含的头部字段，是资源内容的唯一标识（一般是哈希值）。</li>
+<li><code>If-None-Match</code>：<strong>浏览器在请求中</strong>包含的头部字段，表示上次请求时获取的 ETag 值。</li>
+</ul>
+<p><strong>协商缓存机制的工作流程</strong></p>
+<ol>
+<li>初次请求：</li>
+</ol>
+<ul>
+<li>浏览器向服务器请求资源。</li>
+<li>服务器返回资源和 <code>Last-Modified</code> 或 <code>ETag</code>。</li>
+<li>浏览器缓存资源及其相关的头部信息。</li>
+</ul>
+<ol start="2">
+<li>再次请求：</li>
+</ol>
+<ul>
+<li>浏览器在请求中包含 <code>If-Modified-Since</code> 或 <code>If-None-Match</code>。</li>
+<li>服务器根据这些头部信息判断资源是否被修改：<ul>
+<li>如果未修改，返回 <code>304 Not Modified</code>，浏览器从缓存中读取资源。</li>
+<li>如果已修改，返回新的资源和相应的 <code>Last-Modified</code> 或 <code>ETag</code>。</li>
+</ul>
+</li>
+</ul>
+<p><strong>协商缓存的优缺点</strong></p>
+<ol>
+<li>优点：</li>
+</ol>
+<ul>
+<li><strong>节省带宽</strong>：未修改的资源不会再次传输，减少了网络流量。<br>保证资源最新：即使在缓存有效期内，资源有更新也能及时获取。</li>
+<li><strong>保证资源最新</strong>：即使在缓存有效期内，资源有更新也能及时获取。</li>
+</ul>
+<ol start="2">
+<li>缺点：</li>
+</ol>
+<ul>
+<li><strong>服务器负载</strong>：每次请求都需要服务器进行验证，增加了服务器的负载。</li>
+<li><strong>略微延迟</strong>：需要与服务器进行通信，可能会略微增加响应时间。</li>
+</ul>
+<h2 id="2-问题排查"><a href="#2-问题排查" class="headerlink" title="2. 问题排查"></a>2. 问题排查</h2><h3 id="2-1-故障描述"><a href="#2-1-故障描述" class="headerlink" title="2.1 故障描述"></a>2.1 故障描述</h3><p>浏览器访问服务器，加载完 html 文件后卡住，没有展示 loading 状态，也没有任何可交互的 UI 展示，呈现只有背景色的空白页。多次刷新页面也无法解决。打开控制台查看资源加载情况，如下图所示：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-console.png"
+                        alt="alt text"
+                 ></p>
+<h3 id="2-2-排查过程"><a href="#2-2-排查过程" class="headerlink" title="2.2 排查过程"></a>2.2 排查过程</h3><h4 id="2-2-1-问题分析"><a href="#2-2-1-问题分析" class="headerlink" title="2.2.1 问题分析"></a>2.2.1 问题分析</h4><p>正常情况下，进入页面时会显示加载状态，如果这都没显示，那很可能 js 脚本就根本没执行。再结合控制台的资源加载情况，发现作为程序入口的 <code>main.js</code> 确实没有被加载，但是 main.js 确实有在 <code>index.html</code> 中被引入，推测有什么东西阻塞了 <code>main.js</code> 的加载。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-html.png"
+                        alt="alt text"
+                 ></p>
+<p>继续看控制台，发现除了我们项目中的 js 脚本以外，多了几个没见过的脚本，比如 <code>rocket-loader.min.js</code>、<code>invisible.js</code>，还有 rum 这个不知道是什么的接口。清除缓存刷新页面后，这几个脚本消失了，并且网页能够正常加载。于是推测这几个脚本很可能是本次事故的罪魁祸首。</p>
+<h4 id="2-2-2-直接原因"><a href="#2-2-2-直接原因" class="headerlink" title="2.2.2 直接原因"></a>2.2.2 直接原因</h4><p>Google 一下 <code>rocket-loader</code>，得知它是 cloudflare 用于网站性能优化的一个脚本。它会推迟所有 js 脚本的加载，直至网页渲染完毕。推迟 js 脚本的加载这一行为，正好与 main.js 没有加载这一表现一 致。通过这一点合理怀疑是 <code>rocket-loader</code> 没有加载出来，导致 main.js 也没法正常加载执行。</p>
+<p>从上面介绍的公司服务系统架构可以得知，从海外访问时会走 cloudflare。于是改 hosts 文件将公司服务器域名固定为 cloudflare 的 ip，访问后果然得到了<code>rocket-loader</code>。此时还可以正常访问。然后在控制台中将 <code>rocket-loader.min.js</code> 的访问请求 block 掉，成功复现事故。至此，可以确定是 <code>rocket-loader</code> 加载失败，导致呈现空白页。如下图所示：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader.png"
+                        alt="alt text"
+                 ></p>
+<p>从经典的三个 W（ what, why, how）出发，我们已经知道了它是什么，接下来探究一下 why 和 how。</p>
+<h4 id="2-2-3-why：rocket-loader-为什么要这么做"><a href="#2-2-3-why：rocket-loader-为什么要这么做" class="headerlink" title="2.2.3 why：rocket-loader 为什么要这么做?"></a>2.2.3 why：rocket-loader 为什么要这么做?</h4><p>Cloudflare 说 <code>rocket-loader</code> 推迟 js 脚本的加载，是为了让网页能够更早渲染。这一点需要从网页的渲染流程说起。MDN 将<a class="link"   target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work#%E6%B8%B2%E6%9F%93" >网页渲染<i class="fas fa-external-link-alt"></i></a>分为五步，分别为构建 DOM 树、构建 CSSOM 树、构建渲染树、布局和绘制。</p>
+<p>Rocket loader 作用的阶段在第一步——解析 HTML 和构建 DOM 树。在解析 HTML 的过程中，img 和 css 等标签不会影响它的进程，但是 js 脚本会。当 HTML 解析遇到 js 标签时，它会<strong>阻塞渲染并停止解析</strong>，直至 js 脚本文件<strong>下载并解析完成</strong>。其原因在于，js 脚本文件很有可能会修改 DOM 树。这也是我们推荐把 js 脚本放在 HTML 文档最后，或者加上 async&#x2F;defer 属性的原因。</p>
+<p>总结：js 脚本会阻塞页面的渲染，Cloudflare 为了让页面尽早渲染，推迟了 js 脚本的执行，以优化(首屏加载时间) Time to First Paint (TTFP)等指标。</p>
+<h4 id="2-2-4-how：rocket-loader-如何做到这一点的？"><a href="#2-2-4-how：rocket-loader-如何做到这一点的？" class="headerlink" title="2.2.4 how：rocket-loader 如何做到这一点的？"></a>2.2.4 how：rocket-loader 如何做到这一点的？</h4><p>Cloudflare 首先会将 html 中所有的 script 标签的 type，改写为随机字符串-text&#x2F;javascript。如下图所示：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-script-type.png"
+                        alt="alt text"
+                 ></p>
+<p>对于除了 <strong>Javascript MIME 类型</strong>、<strong>module</strong>、<strong>importmap</strong> 以外的 type 值，浏览器会忽略它，<a class="link"   target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/script" >不去执行<i class="fas fa-external-link-alt"></i></a> 。因此，浏览器不再会执行我们在 <code>index.html</code> 中的所有 js 脚本。除了 Cloudflare 自己的脚本，比如 <code>rocket-loader</code>，它们是正常的 js 脚本，会被浏览器正常执行。</p>
+<p>接下来所有的工作都会交给 <code>rocket-loader</code>。Rocket loader 首先会抓取页面中的所有 script 标签，然后将这些脚本作为 preload 的 link 标签，插入到 head 中。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader-preload.png"
+                        alt="alt text"
+                 ></p>
+<p>插入的脚本如下所示。这些脚本会被加载，但是不会被执行，也不会阻塞 DOM 树生成:</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader-link.png"
+                        alt="alt text"
+                 ></p>
+<p>然后 <code>rocket-loader</code> 会监听 window 的 load 事件，在 load 事件结束后，它将之前插入的 preload 的 link 标签删除，重新将这些脚本的 script 标签插入。这样，这些 js 脚本又会被正常执行了。也正因如此，rocket-loader 脚本一旦失效，我们的所有 js 脚本都会无法被执行。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader-invalid.png"
+                        alt="alt text"
+                 ><br><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader-invalid02.png"
+                        alt="alt text"
+                 ></p>
+<p>通过动态插入 link 标签，浏览器可以请求 js 脚本而不阻塞 DOM 树生成，同时也不会阻塞 DOMContentLoaded 事件和 load 事件，从而缩短页面加载的时间。</p>
+<h4 id="2-2-5-rocket-loader-出什么问题了？"><a href="#2-2-5-rocket-loader-出什么问题了？" class="headerlink" title="2.2.5 rocket-loader 出什么问题了？"></a>2.2.5 rocket-loader 出什么问题了？</h4><p><code>rocket-loader</code> 加载失败是直接原因，我们只是通过 block 这一请求复现了事故。那么究竟在用户的浏览器中，为什么会出现<code>rocket-loader.min.js</code>这一资源 404 的情况呢？</p>
+<p>仔细观察<code>rocket-loader.min.js</code>的请求地址，如下图所示：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader-request.png"
+                        alt="alt text"
+                 ></p>
+<p>可以看到 <code>rocket-loader.min.js</code> 资源中 scr 的路径地址上有这么一段路径 <code>/cdn-cgi/</code>, 合理推测下，cloudflare 会拦截 <code>/cdn-cgi</code> 下的请求，并返回它自己的资源，这个请求不会被进一步转发到我们的 AWS 服务器上。</p>
+<p>如果 <code>rocket-loader</code> 这一请求，被正确地发送到了 cloudflare 服务器，那肯定能正确返回这一资源，不会出现 404 的情况。那如果我们不通过 cloudflare，而是直接请求，或者通过 aliyun 去请求 <code>rocket-loader</code> 呢？尝试的结果如下：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader-directrequest.png"
+                        alt="alt text"
+                 ></p>
+<p>可以看到，由于没有 cloudflare 帮忙处理这一请求，这个请求会发到我们自家的服务器上，然而我们自己的服务器上显然是没有这个资源的，于是就会出现 302（尝试重定向）转 404 的情况。回到用户的事故截 图，发现也有 <code>rocket-loader</code> 302 转 404 的情况，这不就对上了吗！于是我们判断，<code>rocket-loader</code> 请求 404，是因为根本没有走 cloudflare。</p>
+<p>上文提过，<code>rocket-loader</code> 是 cloudflare 给 html 插入的性能优化脚本。既然没有走 cloudflare，那为什么还会有 rocket-loader 存在呢？联想一下我们本次解决事故的方式——清缓存刷新，那么问题会不会是出在缓存呢？<code>rocket-loader</code> 是被插入到 <code>index.html</code> 中的，很有可能 <code>index.html</code> 被浏览器缓存了，浏览器一直在使用被插入了 <code>rocket-loader</code> 的 html，直至下一次 <code>index.html</code> 有更新（也就是版本发布）。</p>
+<p>使用 CloudFare 版本的 <code>index.html</code>，却没有向 cloudflare 发送请求。难道浏览器在某一次走了 cloudflare 线路，缓存了 cloudflare 的 html 资源后，之后又回到了 aliyun 线路，但是依然沿用了 cloudflare 版本的 html？回到我们在背景中提到过的浏览器缓存机制。由于 <code>index.html</code> 的 <code>cache-control</code> 响应头中存在 <code>no-cache</code> 字段，浏览器必须每次使用缓存的资源之前，都与服务器进行协商。难道 aliyun 和 cloudflare 之间存在缓存同步机制？如果 aliyun 返回的 ETag 字段值是相同的，是不是会导致浏览器继续使用另一个云服务器返回的资源？</p>
+<p>事实证明，确实如此。**CDN 云服务器没有为我们的 <code>index.html</code> 添加 ETag，它们的响应头里的 ETag，是我们自己的 nginx 服务器返回的。较新版本的 nginx 都会自动为所有静态资源创建 ETag。所采用 的算法为计算文件的最后修改时间的 16 进制，以及文件大小的 16 进制，并将它们通过短横连接<a class="link"   target="_blank" rel="noopener" href="https://serverfault.com/questions/690341/algorithm-behind-nginx-etag-generation" >查看详情<i class="fas fa-external-link-alt"></i></a>。以当的 <code>index.html</code> 为例，ETag 为 ”64ec71f1-1957”，最后修改时间为 Mon, 28 Aug 2023 10:07:45 GMT，如图所示：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader-etag.png"
+                        alt="alt text"
+                 ></p>
+<p>计算一下修改时间的 16 进制，会发现确实是 64ec71f1。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="title function_">dayjs</span>(<span class="string">&#x27;Mon, 28 Aug 2023 10:07:45 GMT&#x27;</span>).<span class="title function_">unix</span>().<span class="title function_">toString</span>(<span class="number">16</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str) <span class="comment">// 64ec71f1</span></span><br></pre></td></tr></table></figure>
+
+<p>至此，我们基本可以确定本次事故的根本原因。</p>
+<h3 id="2-3-问题总结"><a href="#2-3-问题总结" class="headerlink" title="2.3 问题总结"></a>2.3 问题总结</h3><p>作为问题定位的总结，我们来一步步分析一下该事故是如何发生的。</p>
+<ol>
+<li><p>用户在海外、或者在使用代理的情况下，访问网页，此时走的是 cloudflare 线路。浏览器获取到了带有 <code>rocket-loader</code> 的 <code>index.html</code> 并缓存下来,此时一切正常。</p>
+</li>
+<li><p>用户回到国内、或者关闭代理，访问网页，此时走的 aliyun 线路。浏览器带着 ETag 询问 aliyun 服务器是否能使用缓存下来的<code>index.html</code>，由于 ETag 相同，服务器告诉浏览器可以复用。于是 浏览器继续使用带有 <code>rocket-loader</code> 脚本的 <code>index.html</code>。</p>
+</li>
+<li><p><code>rocket-loader</code> 自身也有缓存，且支持强缓存。在有效期内（48 小时），浏览器可以直接复用 <code>rocket-loader</code>，而不用与服务器协商。此时请求 <code>rocket-loader</code> 不会报错，因为浏览器直接使 用了缓存,此时依然没有任何问题。</p>
+</li>
+<li><p>48 小时过后，<code>rocket-loader</code> 的缓存失效。此时用户再次访问网页，浏览器依然使用 cloudflare 提供的 <code>index.html</code>，但是它现在需要跟服务器协商是否能使用 <code>rocket-loader</code> 的缓存。但是此时走的不是 cloudflare 线路，显然 aliyun 和我们的 AWS 都不知道 rocket-loader 是什么，于是返回 404。</p>
+</li>
+<li><p><code>rocket-loader</code> 404，导致其他 js 资源无法正常加载，呈现空白页。直至用户清除 <code>index.html</code> 的缓存，或者在控制台中启用 Disable Cache 选项。</p>
+</li>
+</ol>
+<p>为了重现事故，我于 8.29 下午 5 点通过 cloudflare 访问网页，并关闭 Disable Cache 选项。8.31 下午 5 点通过 aliyun 再次访问页面时，<code>rocket-loader</code> 和预期一致出现 404，并且页面呈现空白。和用户那边 的表现完全一致。如图所示：</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-rocket-loader-404.png"
+                        alt="alt text"
+                 ></p>
+<h3 id="2-3-客户端临时解决方案"><a href="#2-3-客户端临时解决方案" class="headerlink" title="2.3 客户端临时解决方案"></a>2.3 客户端临时解决方案</h3><p>用户在当前页面清除缓存并强制刷新、或打开控制台并开启 Disable Cache 选项、或在浏览器设 置中清除浏览器缓存，即可解决问题。</p>
+<h2 id="3-改进方案"><a href="#3-改进方案" class="headerlink" title="3. 改进方案"></a>3. 改进方案</h2><h3 id="再次发生的可能性分析"><a href="#再次发生的可能性分析" class="headerlink" title="再次发生的可能性分析"></a>再次发生的可能性分析</h3><p>在 Chrome 中新建一个用户，打开控制台观察 Disable Cache 选项，发现该选项时默认是未勾选的。也就是说，一般用户的浏览器都是会使用缓存的。那么用户一旦在国外和国内环境下分别访问了网页，就有很大的可能性遇到这一问题。不只是这个项目，我们的其他所有项目，都会出现这种情况，这是相当不妙的。</p>
+<p><img  
+                       lazyload
+                       alt="image"
+                       data-src="/../../images/posts/cache/cache-chrome-cache.png"
+                        alt="alt text"
+                 ></p>
+<h3 id="禁用-Rocket-loader？"><a href="#禁用-Rocket-loader？" class="headerlink" title="禁用 Rocket-loader？"></a>禁用 Rocket-loader？</h3><p>先看下 <code>rocket-loader</code> 对我们有何影响。按照 cloudflare 文档的说法，开启 <code>rocket-loader</code> 能大幅提升网站的响应速度，提升包括以下几方面：Time to First Paint (TTFP)，Time to First Contentful Paint (TTFCP)，Time to First Meaningful Paint (TTFMP)，Document Load。</p>
+<p>不如我们直接来测试一下，分别走 aliyun 和 cloudflare 访问网页的情况下，加载速度究 竟有何不同。</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="center">aliyun</th>
+<th align="center">cloudflare</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">DOMContentLoaded</td>
+<td align="center">3.62</td>
+<td align="center">0.50</td>
+</tr>
+<tr>
+<td align="left">load</td>
+<td align="center">4.31</td>
+<td align="center">0.51</td>
+</tr>
+<tr>
+<td align="left">页面完全呈现</td>
+<td align="center">8.09</td>
+<td align="center">5.44</td>
+</tr>
+</tbody></table>
+<p>可以看出，走 cloudflare 的速度确实要快不少，尤其是 <code>DOMContentLoaded</code> 和页面 <code>load</code> 的时间。当然也不能排除我自己开了代理之后，有一定的加速效果。</p>
+<p>加载速度的提升，除了会给用户良好的体验外，还会影响 google 搜索结果的排名。根据 google 的资料，网页的加载速度，如 Largest Contentful Paint (LCP)，会是 google 的排名系统所考虑的一项指标。</p>
+<p>对于 <code>rocket-loader</code> 的负面评价也是有的。比如有人指出，<code>rocket-loader</code>会影响 ajax 和 js 动画；如果网站中有插入广告，那么广告脚本可能也会受影响<a class="link"   target="_blank" rel="noopener" href="https://charbelnemnom.com/what-is-cloudflare-rocket-loader/" >详情<i class="fas fa-external-link-alt"></i></a> 。Cloudflare 自己的文档也说，如果你的网页中的 js 脚本加载出现问题，那么请禁用 <code>rocket-loader</code>。除此之外，国内访问 cloudflare 会较慢，因此多数程序员也是建议面向国内的网站直接禁用 <code>rocket-loader</code>。</p>
+<h3 id="其他可能的方案"><a href="#其他可能的方案" class="headerlink" title="其他可能的方案"></a>其他可能的方案</h3><p>引起事故的其中一个原因，是走 aliyun 和 cloudflare 线路访问时，有可能使用的 <code>index.html</code> 是旧的， 没有使用最新的由 CDN 提供的 <code>index.html</code>。</p>
+<p>由此启发想到两种方案：</p>
+<ol>
+<li><p>能否不使用我们的 nginx 提供的 ETag，而是由 CDN 服务器去创建 ETag？查阅资料后发现，Cloudflare 只是转发源服务器的 ETag，并没有提供创建 ETag 功能。<a class="link"   target="_blank" rel="noopener" href="https://developers.cloudflare.com/cache/reference/etag-headers/" >详情<i class="fas fa-external-link-alt"></i></a> 。而 aliyun 没有相关文档说明，经确认后 aliyun 也不提供相关功能,此方案寄。</p>
+</li>
+<li><p>别惦记你那缓存了。既然两个 CDN 服务器提供的 <code>index.html</code> 不同，那么我们直接禁止浏览 器缓存 <code>index.html</code> 如何？正好 http 的 <code>Cache-Control</code> 响应头提供了这一功能，只要在其中带上 <code>no-store</code> 字段即可。并且观察后发现，<code>index.html</code> 的大小仅为 3-4 kb，即使每次都重新请求 ，对性能的影响也可以忽略不计。这可能是目前为止的最佳方案。</p>
+</li>
+</ol>
+<hr>
+<p><strong>参考资料</strong></p>
+<ol>
+<li><a class="link"   target="_blank" rel="noopener" href="https://www.cloudflare.com/zh-cn/learning/cdn/what-is-a-cdn/" >什么是内容交付网络（CDN）？ | CDN 是如何工作的？<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching" >HTTP 缓存<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work" >ETag 渲染页面：浏览器的工作原理<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element/script" >script：脚本元素<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://developers.cloudflare.com/speed/optimization/content/rocket-loader/" >Rocket Loader<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://charbelnemnom.com/what-is-cloudflare-rocket-loader/" >What is Cloudflare Rocket Loader<i class="fas fa-external-link-alt"></i></a></li>
+<li><a class="link"   target="_blank" rel="noopener" href="https://developers.cloudflare.com/cache/reference/etag-headers/" >Using ETag Headers with Cloudflare<i class="fas fa-external-link-alt"></i></a></li>
+</ol>
+
+                    
+                </div>
+
+                
+
+                <div class="post-bottom-tags-and-share border-box">
+                    <div>
+                        
+                            <ul class="post-tags-box border-box">
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/performance/">performance</a>
+                                    </li>
+                                
+                                    <li class="tag-item border-box">
+                                        <i class="icon fas fa-hashtag"></i>&nbsp;<a href="/tags/cache/">cache</a>
+                                    </li>
+                                
+                            </ul>
+                        
+                    </div>
+                    <div>
+                        
+                            <div class="post-share-container border-box">
+    <ul class="share-list-wrap border-box">
+        <li class="qq share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到 QQ"
+        >
+            <i class="fa-brands fa-qq"></i>
+        </li>
+        <li class="wechat share-item border-box flex-center tooltip tooltip-img"
+            data-tooltip-content="分享到微信"
+            data-tooltip-img-tip="微信扫一扫"
+            data-tooltip-img-style="background-color: #fff; top: -10px; padding: 0.6rem 0.6rem 0.1rem 0.6rem;"
+        >
+            <i class="fa-brands fa-weixin"></i>
+        </li>
+        <li class="weibo share-item border-box flex-center tooltip"
+            data-tooltip-content="分享到微博"
+        >
+            <i class="fa-brands fa-weibo"></i>
+        </li>
+    </ul>
+</div>
+
+                        
+                    </div>
+                </div>
+
+                
+
+                
+                    <div class="post-nav border-box">
+                        
+                            <div class="prev-post">
+                                <a class="prev"
+                                   rel="prev"
+                                   href="/2024/03/01/advance-javascript/series-01-scope/"
+                                   title="深入学习 JavaScript 系列（一)：作用域"
+                                >
+                                    <span class="left arrow-icon flex-center">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </span>
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">深入学习 JavaScript 系列（一)：作用域</span>
+                                        <span class="post-nav-item">上一篇</span>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                        
+                            <div class="next-post">
+                                <a class="next"
+                                   rel="next"
+                                   href="/2023/03/20/flex/"
+                                   title="细说 Flex 布局"
+                                >
+                                    <span class="title flex-center">
+                                        <span class="post-nav-title-item text-ellipsis">细说 Flex 布局</span>
+                                        <span class="post-nav-item">下一篇</span>
+                                    </span>
+                                    <span class="right arrow-icon flex-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                
+
+                
+                    
+
+
+
+
+
+
+                
+            </div>
+        </div>
+
+        
+            <div class="pc-post-toc right-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%83%8C%E6%99%AF"><span class="nav-text">1. 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%85%AC%E5%8F%B8%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%EF%BC%9A"><span class="nav-text">1.1 公司项目的系统架构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6%EF%BC%9A"><span class="nav-text">1.2 浏览器的缓存机制：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-%E5%BC%BA%E7%BC%93%E5%AD%98%EF%BC%9A"><span class="nav-text">1.2.1 强缓存：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98%EF%BC%9A"><span class="nav-text">1.2.2 协商缓存：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="nav-text">2. 问题排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%95%85%E9%9A%9C%E6%8F%8F%E8%BF%B0"><span class="nav-text">2.1 故障描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%8E%92%E6%9F%A5%E8%BF%87%E7%A8%8B"><span class="nav-text">2.2 排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-text">2.2.1 问题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E7%9B%B4%E6%8E%A5%E5%8E%9F%E5%9B%A0"><span class="nav-text">2.2.2 直接原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-why%EF%BC%9Arocket-loader-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%99%E4%B9%88%E5%81%9A"><span class="nav-text">2.2.3 why：rocket-loader 为什么要这么做?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-how%EF%BC%9Arocket-loader-%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E8%BF%99%E4%B8%80%E7%82%B9%E7%9A%84%EF%BC%9F"><span class="nav-text">2.2.4 how：rocket-loader 如何做到这一点的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-5-rocket-loader-%E5%87%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E4%BA%86%EF%BC%9F"><span class="nav-text">2.2.5 rocket-loader 出什么问题了？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-text">2.3 问题总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-text">2.3 客户端临时解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88"><span class="nav-text">3. 改进方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E5%8F%91%E7%94%9F%E7%9A%84%E5%8F%AF%E8%83%BD%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">再次发生的可能性分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%81%E7%94%A8-Rocket-loader%EF%BC%9F"><span class="nav-text">禁用 Rocket-loader？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8F%AF%E8%83%BD%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-text">其他可能的方案</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        
+    </div>
+</div>
+
+
+                
+            </div>
+        </div>
+
+        <div class="page-main-content-bottom border-box">
+            
+<footer class="footer border-box">
+    <div class="copyright-info info-item">
+    &copy;&nbsp;<span>2021</span>&nbsp;-&nbsp;2024
+    
+            &nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;&nbsp;<a href="/">小举</a>
+        
+    </div>
+
+    <div class="theme-info info-item">
+        由&nbsp;<a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;驱动&nbsp;&&nbsp;主题&nbsp;<a class="keep-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep</a>
+    </div>
+
+    
+
+    
+
+    
+</footer>
+
+        </div>
+    </div>
+
+    <!-- post tools -->
+    
+        <div class="post-tools right-toc">
+            <div class="post-tools-container border-box">
+    <ul class="post-tools-list border-box">
+        <!-- PC encrypt again -->
+        
+
+        <!-- PC TOC show toggle -->
+        
+            <li class="tools-item flex-center toggle-show-toc">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        <!-- PC go comment -->
+        
+
+        <!-- PC full screen -->
+        <li class="tools-item flex-center full-screen">
+            <i class="fa-solid fa-expand"></i>
+        </li>
+    </ul>
+</div>
+
+        </div>
+    
+
+    <!-- side tools -->
+    <div class="side-tools">
+        <div class="side-tools-container border-box ">
+    <ul class="side-tools-list side-tools-show-handle border-box">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
+
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <!-- toggle mode -->
+        
+            <li class="tools-item tool-toggle-theme-mode flex-center">
+                <i class="fas fa-moon"></i>
+            </li>
+        
+
+        <!-- rss -->
+        
+            <li class="tools-item rss flex-center">
+                <a class="flex-center"
+                   href="/atom.xml"
+                   target="_blank"
+                >
+                    <i class="fas fa-rss"></i>
+                </a>
+            </li>
+        
+
+        <!-- to bottom -->
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list border-box">
+        
+            <li class="tools-item toggle-show-toc-tablet flex-center">
+                <i class="fas fa-list"></i>
+            </li>
+        
+
+        
+
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+
+        <li class="tools-item tool-scroll-to-top flex-center show-arrow">
+            <i class="arrow fas fa-arrow-up"></i>
+            <span class="percent"></span>
+        </li>
+    </ul>
+</div>
+
+    </div>
+
+    <!-- image mask -->
+    <div class="zoom-in-image-mask">
+    <img class="zoom-in-image">
+</div>
+
+
+    <!-- local search -->
+    
+        <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+          <span class="search-input-field-pre">
+            <i class="fas fa-keyboard"></i>
+          </span>
+            <div class="search-input-container">
+                <input autocomplete="off"
+                       autocorrect="off"
+                       autocapitalize="off"
+                       placeholder="搜索..."
+                       spellcheck="false"
+                       type="search"
+                       class="search-input"
+                >
+            </div>
+            <span class="close-popup-btn">
+                <i class="fas fa-times"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fas fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+
+    <!-- tablet toc -->
+    
+        <div class="tablet-post-toc-mask">
+            <div class="tablet-post-toc">
+                <div class="post-toc-wrap border-box">
+    <div class="post-toc border-box">
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%83%8C%E6%99%AF"><span class="nav-text">1. 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%85%AC%E5%8F%B8%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%EF%BC%9A"><span class="nav-text">1.1 公司项目的系统架构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6%EF%BC%9A"><span class="nav-text">1.2 浏览器的缓存机制：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-1-%E5%BC%BA%E7%BC%93%E5%AD%98%EF%BC%9A"><span class="nav-text">1.2.1 强缓存：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-2-%E5%8D%8F%E5%95%86%E7%BC%93%E5%AD%98%EF%BC%9A"><span class="nav-text">1.2.2 协商缓存：</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5"><span class="nav-text">2. 问题排查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%95%85%E9%9A%9C%E6%8F%8F%E8%BF%B0"><span class="nav-text">2.1 故障描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%8E%92%E6%9F%A5%E8%BF%87%E7%A8%8B"><span class="nav-text">2.2 排查过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="nav-text">2.2.1 问题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E7%9B%B4%E6%8E%A5%E5%8E%9F%E5%9B%A0"><span class="nav-text">2.2.2 直接原因</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-why%EF%BC%9Arocket-loader-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%BF%99%E4%B9%88%E5%81%9A"><span class="nav-text">2.2.3 why：rocket-loader 为什么要这么做?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-how%EF%BC%9Arocket-loader-%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0%E8%BF%99%E4%B8%80%E7%82%B9%E7%9A%84%EF%BC%9F"><span class="nav-text">2.2.4 how：rocket-loader 如何做到这一点的？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-5-rocket-loader-%E5%87%BA%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%E4%BA%86%EF%BC%9F"><span class="nav-text">2.2.5 rocket-loader 出什么问题了？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93"><span class="nav-text">2.3 问题总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%B4%E6%97%B6%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-text">2.3 客户端临时解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%94%B9%E8%BF%9B%E6%96%B9%E6%A1%88"><span class="nav-text">3. 改进方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E5%8F%91%E7%94%9F%E7%9A%84%E5%8F%AF%E8%83%BD%E6%80%A7%E5%88%86%E6%9E%90"><span class="nav-text">再次发生的可能性分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%81%E7%94%A8-Rocket-loader%EF%BC%9F"><span class="nav-text">禁用 Rocket-loader？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E5%8F%AF%E8%83%BD%E7%9A%84%E6%96%B9%E6%A1%88"><span class="nav-text">其他可能的方案</span></a></li></ol></li></ol>
+    </div>
+</div>
+
+            </div>
+        </div>
+    
+</main>
+
+
+
+
+
+<!-- common js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/utils.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/header-shrink.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/back2top.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/toggle-theme.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/code-block.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/main.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/libs/anime.min.js"></script>
+
+<!-- local search -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/local-search.min.js"></script>
+
+
+<!-- lazyload -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/lazyload.min.js"></script>
+
+
+<div class="pjax">
+    <!-- home page -->
+    
+
+    <!-- post page -->
+    
+        <!-- post-helper -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/post-helper.min.js"></script>
+
+        <!-- toc -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/toc.min.js"></script>
+        
+
+        <!-- copyright-info -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/copyright-info.min.js"></script>
+        
+
+        <!-- share -->
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/post/share.min.js"></script>
+        
+    
+
+    <!-- categories page -->
+    
+
+    <!-- links page -->
+    
+
+    <!-- photos page -->
+    
+
+    <!-- tools page -->
+    
+</div>
+
+<!-- mermaid -->
+
+
+<!-- pjax -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-theme-keep/4.2.5/js/libs/pjax.min.js"></script>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        window.pjax = new Pjax({
+            selectors: [
+                'head title',
+                '.page-container',
+                '.pjax'
+            ],
+            history: true,
+            debug: false,
+            cacheBust: false,
+            timeout: 0,
+            analytics: false,
+            currentUrlFullReload: false,
+            scrollRestoration: false,
+        });
+
+        document.addEventListener('pjax:send', () => {
+            KEEP.utils.pjaxProgressBarStart()
+        });
+
+        document.addEventListener('pjax:complete', () => {
+            KEEP.utils.pjaxProgressBarEnd()
+            window.pjax.executeScripts(document.querySelectorAll('script[data-pjax], .pjax script'))
+            KEEP.initExecute()
+        });
+    });
+</script>
+
+
+
+
+    
+        
+    
+
+</body>
+</html>
